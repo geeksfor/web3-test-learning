@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "forge: test",
+      "type": "shell",
+      "command": "forge test -vvv",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "forge: test (match)",
+      "type": "shell",
+      "command": "forge test -vvv --match-test \"${input:testName}\"",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "forge: debug (single test)",
+      "type": "shell",
+      "command": "forge test -vvv --debug --match-test \"${input:debugTest}\"",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "forge: debug (contract + test)",
+      "type": "shell",
+      "command": "forge test -vvv --debug --match-contract \"${input:contractName}\" --match-test \"${input:debugTest}\"",
+      "group": "test",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "testName",
+      "type": "promptString",
+      "description": "match-test (e.g. test_DeployAndInitValue)",
+      "default": "test_"
+    },
+    {
+      "id": "debugTest",
+      "type": "promptString",
+      "description": "Test name/regex for --debug (e.g. test_Increment)",
+      "default": "test_"
+    },
+    {
+      "id": "contractName",
+      "type": "promptString",
+      "description": "Test contract name (e.g. CounterTest)",
+      "default": ""
+    }
+  ]
+}
