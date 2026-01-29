@@ -14,11 +14,12 @@ tags: [foundry, forge, solidity, testing, setup]
 
 ## 关键知识点（用自己的话总结）
 1. Foundry 的核心工具：
-   - `forge`：编译/测试/脚本
-   - `cast`：链上交互工具（调用合约、编码解码等）
-   - `anvil`：本地节点（本地链）
+   - `forge`：编译/测试/脚本 核心（编译、测试、脚本、依赖管理）
+   - `cast`：链上交互工具（调用合约、编码解码、发交易、读合约、编码/解码、签名等）
+   - `anvil`：本地节点（本地链，本地链、可 fork 主网）
+   - `chisel`：Solidity REPL（交互式试验，偏开发用）
 2. `forge test` 的最小闭环：
-   - `src/` 写合约
+   - `src/` 写合约，了解合约的基本语法，参考学习笔记：https://www.yuque.com/loulan-lwrxi/xwec5t/xi76ugnq78dxlak5
    - `test/` 写测试（Solidity）
    - `forge test` 运行并得到断言结果
 3. 测试的最小结构：
