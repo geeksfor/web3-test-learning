@@ -1,5 +1,31 @@
 ## Foundry
 
+## Foundry 学习日志（2026/01）
+
+- D1: Foundry 环境搭建 + 第一个测试  
+  `docs/2026/01/2026-01-29-foundry-setup-first-test.md`
+
+- D2: Foundry 基础学习（Counter / 测试结构）  
+  `docs/2026/01/2026-01-30-Foundry-learn.md`
+
+- D3: ERC-20 allowance 全链路（approve / transferFrom）✅  
+  Doc: `docs/2026/01/2026-01-31-erc20-allowance.md`  
+  Code: `labs/foundry-labs/src/SimpleERC20.sol`  
+  Tests: `labs/foundry-labs/test/SimpleERC20allowance.t.sol`
+
+### D3 一键运行（在 Foundry 工程目录执行）
+```bash
+cd labs/foundry-labs
+
+# 跑 allowance 测试合集
+forge test -vvv --match-contract SimpleERC20AllowanceTest
+
+# 只跑某条用例（示例）
+forge test -vvv \
+  --match-contract SimpleERC20AllowanceTest \
+  --match-test test_transferFrom_reverts_whenAllowanceInsufficient
+
+
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
 Foundry consists of:
