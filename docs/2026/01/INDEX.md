@@ -32,7 +32,7 @@ forge test -vvv
 
 ---
 
-### D3 — ERC20 Allowance 全链路：approve / transferFrom + 事件校验 + 自定义错误精确匹配
+### D3-1 — ERC20 Allowance 全链路：approve / transferFrom + 事件校验 + 自定义错误精确匹配
 - 📄 文档：[`2026-01-31-erc20-allowance.md`](./2026-01-31-erc20-allowance.md)
 - 📦 代码：`labs/foundry-labs/src/SimpleERC20.sol`
 - 🧪 测试：`labs/foundry-labs/test/SimpleERC20allowance.t.sol`
@@ -40,6 +40,15 @@ forge test -vvv
 ```bash
 cd labs/foundry-labs
 forge test -vvv --match-contract SimpleERC20AllowanceTest
+```
+### D3-2 — [foundry][erc20] mint/burn + onlyOwner + revert 分支测试（error/expectRevert/expectEmit
+- 📄 文档：[`2026-01-31-erc20-mint-burn-onlyowner.md`](./2026-01-31-erc20-mint-burn-onlyowner.md)
+- 📦 代码：`labs/foundry-labs/src/SimpleERC20.sol`
+- 🧪 测试：`labs/foundry-labs/test/SimpleERC20.MintBurn.t.sol`
+- ▶️ 运行：
+```bash
+cd labs/foundry-labs
+forge test -vvv --match-contract SimpleERC20MintBurnTest
 ```
 
 ---
