@@ -16,6 +16,9 @@
   forge test --fuzz-runs 2000 --match-test testFuzz_transfer_balanceConservation -vvv
   ```
 
+- **D5-2 | README + Coverage 初始盘点（待补覆盖率)**
+- 📄 文档：[`2026-02-01-D5-2-readme-coverage.md`](./2026-02-01-D5-2-readme-coverage.md)
+
 ---
 
 ## 使用建议
