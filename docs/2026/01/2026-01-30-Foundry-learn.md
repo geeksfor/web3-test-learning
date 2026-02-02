@@ -44,7 +44,7 @@ tags: [foundry, forge, solidity, testing, setup]
   - 按测试文件路径(forge test --match-path test/SimpleERC20.t.sol)
   - 组合（更精准）(forge test --match-path test/SimpleERC20.t.sol --match-contract SimpleERC20Test --match-test test_transfer)
 5. 地址会自动补齐到20字节
-  - 0xA11CE 很短，Solidity 会把它当成一个数，然后转成 address 时会 左侧补 0 变成 20 字节： 0x00000000000000000000000000000000000a11ce（示意）
+  - 0xA11CE 很短，Solidity 会把它当成一个数，然后转成 address 时会 左侧补 0 变成 20 字节：0x00000000000000000000000000000000000a11ce（示意）
 6. 不能乱用的坑
   - 不要用 address(0)（零地址），很多合约会把它当作特殊含义（mint/burn/禁止转账等），容易干扰测试
   - 你需要“签名/EOA 发交易”的能力，光写地址不够：你要用 Foundry 的 vm.addr(privateKey) 生成地址, 并用 vm.sign(privateKey, digest) 做签名（或用 vm.startBroadcast 等）
