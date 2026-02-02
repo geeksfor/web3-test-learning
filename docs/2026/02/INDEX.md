@@ -19,6 +19,19 @@
 - **D5-2 | README + Coverage 初始盘点（待补覆盖率)**
 - 📄 文档：[`2026-02-01-D5-2-readme-coverage.md`](./2026-02-01-D5-2-readme-coverage.md)
 
+### 2026-02-03
+- **D6 | Foundry Fuzz：D8：ERC721 测试框架（mint / ownerOf / balanceOf）+ fuzz + invariant**  
+  - 📄 文档：[`2026-02-03-D6-ERC721-tests.md`](./2026-02-03-D6-ERC721-tests.md)
+  - 📄 学习笔记：[`erc721-notes.md`](./erc721-notes.md)
+  - 📦 代码：`labs/foundry-labs/src/erc721/SimpleERC721.sol`
+  - 🧪 测试：`labs/foundry-labs/test/erc721/SimpleERC721.t.sol`  
+  - 关键词：fuzz / erc721 / mint / balanceOf / ownerOf / invariant
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract SimpleERC721Test -vvv
+  ```
+
 ---
 
 ## 使用建议
