@@ -31,6 +31,17 @@
   cd labs/foundry-labs
   forge test --match-contract SimpleERC721Test -vvv
   ```
+- **D6 | ERC721 Transfer：transferFrom / safeTransferFrom（正常 + 未授权 revert）**  
+  - 📄 文档：[`2026-02-04-D9-ERC721-transfer-safeTransfer.md`](./2026-02-04-D9-ERC721-transfer-safeTransfer.md)
+  - 📄 学习笔记：[`erc721_erc20_foundry_notes.md`](./erc721_erc20_foundry_notes.md)
+  - 📦 代码：`labs/foundry-labs/src/erc721/SimpleERC721.sol`
+  - 🧪 测试：`labs/foundry-labs/test/erc721/SimpleERC721.auth.t.sol`  
+  - 关键词：erc721 / transferFrom / safeTransferFrom / approve / operator / revert / receiver
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract SimpleERC721AuthTest -vvv
+  ```
 
 ---
 
