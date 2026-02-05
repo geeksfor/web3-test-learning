@@ -18,6 +18,7 @@ contract SimpleERC721 {
     error NotOwnerNorApproved();
     error InvalidFrom();
     error UnsafeRecipient();
+    error ApproveToSelf();
 
     // ============ events ============
     event Transfer(
@@ -86,11 +87,13 @@ contract SimpleERC721 {
         // 只有 owner 或 operator 可以 approve
         if (msg.sender != owner && !_operatorApprovals[owner][msg.sender])
             revert NotOwnerNorApproved();
+        if (owner == to) revert ApproveToSelf();
         _tokenApprovals[tokenId] = to;
         emit Approval(owner, to, tokenId);
     }
 
     function setApprovalForAll(address operator, bool approved) external {
+        if (msg.sender == operator) revert ApproveToSelf();
         _operatorApprovals[msg.sender][operator] = approved;
         emit ApprovalForAll(msg.sender, operator, approved);
     }

@@ -42,6 +42,19 @@
   cd labs/foundry-labs
   forge test --match-contract SimpleERC721AuthTest -vvv
   ```
+### 2026-02-04
+- **D10 | ERC721 Approvals：approve / getApproved + setApprovalForAll / isApprovedForAll（正常 + revert + 转移后清空）**  
+  - 📄 文档：[`2026-02-04-D9-ERC721-transfer-safeTransfer.md`](./2026-02-04-D9-ERC721-transfer-safeTransfer.md)
+  - 📄 学习笔记：[`2026-02-05-D10-ERC721-approvals.md`](./2026-02-05-D10-ERC721-approvals.md)
+  - 📦 代码：`labs/foundry-labs/src/erc721/SimpleERC721.sol`
+  - 🧪 测试：`labs/foundry-labs/test/erc721/SimpleERC721.approvals.t.sol`  
+  - 关键词：erc721 / approve / getApproved / setApprovalForAll / isApprovedForAll / operator / events / revert / clear-approval
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract SimpleERC721ApprovalsTest -vvv
+  ```
+
 
 ---
 
