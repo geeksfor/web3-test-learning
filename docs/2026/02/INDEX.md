@@ -57,7 +57,8 @@
 
 ### 2026-02-06
 - **D11 | 权限模型：Ownable / AccessControl（错误示例 + 正确示例）测试集：未初始化 / 锁死 / 越权扩张**  
-  - 📄 学习笔记：[`2026-02-06-D11-Auth-Ownable-AccessControl.md`](./2026-02-06-D11-Auth-Ownable-AccessControl.md)
+  - 📄 文档：[`2026-02-06-D11-Auth-Ownable-AccessControl.md`](./2026-02-06-D11-Auth-Ownable-AccessControl.md)
+  - 📄 学习笔记：[`2026-02-AccessControl-Ownable-Foundry-Notes.md`](./2026-02-AccessControl-Ownable-Foundry-Notes.md)
   - 📦 代码：`labs/foundry-labs/src/auth/*.sol`
   - 🧪 测试：`labs/foundry-labs/test/auth/*.t.sol`  
   - 关键词：ownable / accesscontrol / MINTER_ROLE / DEFAULT_ADMIN_ROLE / grantRole / revokeRole / role-admin / lock / self-admin / privilege-escalation
