@@ -55,6 +55,18 @@
   forge test --match-contract SimpleERC721ApprovalsTest -vvv
   ```
 
+### 2026-02-06
+- **D11 | 权限模型：Ownable / AccessControl（错误示例 + 正确示例）测试集：未初始化 / 锁死 / 越权扩张**  
+  - 📄 学习笔记：[`2026-02-06-D11-Auth-Ownable-AccessControl.md`](./2026-02-06-D11-Auth-Ownable-AccessControl.md)
+  - 📦 代码：`labs/foundry-labs/src/auth/*.sol`
+  - 🧪 测试：`labs/foundry-labs/test/auth/*.t.sol`  
+  - 关键词：ownable / accesscontrol / MINTER_ROLE / DEFAULT_ADMIN_ROLE / grantRole / revokeRole / role-admin / lock / self-admin / privilege-escalation
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-path test/OpenZeppelinSimple/*.t.sol -vvv
+  ```
+
 
 ---
 
