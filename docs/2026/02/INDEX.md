@@ -67,6 +67,17 @@
   cd labs/foundry-labs
   forge test --match-path test/OpenZeppelinSimple/*.t.sol -vvv
   ```
+### 2026-02-07
+**D12 | Invariant 入门：ERC20 totalSupply == minted-burned（ghost state / Handler / trace 定位）**
+- 📄 文档：[`2026-02-08-D12-ERC20-invariant-totalSupply.md`](./2026-02-08-D12-ERC20-invariant-totalSupply.md)
+  - 📦 代码：`labs/foundry-labs/src/SimpleERC20.sol`
+  - 🧪 测试：`labs/foundry-labs/test/erc20/SimpleERC20.invariant.t.sol`
+  - 关键词：invariant / StdInvariant / handler / ghost state / mintedSum / burnedSum / trace / shrink
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract SimpleERC20InvariantTest -vvv --runs 500
+  ```
 
 
 ---
