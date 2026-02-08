@@ -22,3 +22,8 @@ coverage/
 
 # file
 lcov.info
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
