@@ -78,6 +78,19 @@
   cd labs/foundry-labs
   forge test --match-contract SimpleERC20InvariantTest -vvv --runs 500
   ```
+### 2026-02-09
+- **D15 | Reentrancy：最小银行（攻击合约 + 修复 CEI / ReentrancyGuard）回归**
+  - 📄 文档：[`2026-02-09-D15-reentrancy-minibank.md`](./2026-02-09-D15-reentrancy-minibank.md)
+  - 📄 学习笔记: [`D15-reentrancy-qa-notes.md`](./D15-reentrancy-qa-notes.md)]
+  - 📦 漏洞：`labs/foundry-labs/src/vulns/D15_Reentrancy_Vuln.sol`
+  - 💥 攻击：`labs/foundry-labs/src/vulns/D15_Reentrancy_Exploit.sol`
+  - 🧪 测试：`labs/foundry-labs/test/vulns/D15_Reentrancy.t.sol`
+  - 关键词：reentrancy / receive / fallback / CEI / nonReentrant / call{value:}
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D15ReentrancyTest -vvv
+
 
 
 ---
