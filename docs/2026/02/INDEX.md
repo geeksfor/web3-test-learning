@@ -92,6 +92,20 @@
   forge test --match-contract D15ReentrancyTest -vvv
 
 
+### 2026-02-10
+- **D16 | 权限缺陷：Missing Access Control（缺 onlyOwner/role）→ PoC → AccessControl 角色修复 → 回归**
+  - 📄 文档：[`2026-02-10-D16-access-control.md`](./2026-02-10-D16-access-control.md)
+  - 📦 漏洞合约：`labs/foundry-labs/src/vulns/AccessControlVuln.sol`
+  - ✅ 修复合约：`labs/foundry-labs/src/vulns/AccessControlRolesFixed.sol`
+  - ✅ 修复合约：`labs/foundry-labs/src/vulns/AccessControlFixed.sol`
+  - 🧪 测试：`labs/foundry-labs/test/vulns/AccessControlD16Roles.t.sol`
+  - 🧪 测试：`labs/foundry-labs/test/vulns/AccessControlD16.t.sol`
+  - 关键词：access control / onlyRole / CONFIG_ROLE / FINANCE_ROLE / PAUSER_ROLE / PoC / regression
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-path test/vulns/AccessControlD16Roles.t.sol -vvv
+  ```
 
 ---
 
