@@ -106,6 +106,22 @@
   cd labs/foundry-labs
   forge test --match-path test/vulns/AccessControlD16Roles.t.sol -vvv
   ```
+  ### 2026-02-11
+  - **D17 | 初始化漏洞（可升级/可初始化合约）：init 可被重复调用；攻击 + 修复（initializer）**  
+  - 📄 文档：[`2026-02-11-D17-init-vuln-initializer.md`](./2026-02-11-D17-init-vuln-initializer.md)
+  - 📦 代码：
+    - `src/vulns/D17_BadInit.sol`
+    - `src/vulns/D17_GoodInit.sol`
+  - 🧪 测试：
+    - `test/vulns/D17_InitVuln.t.sol`
+    - `test/vulns/D17_GoodInitVuln.t.sol`
+  - 关键词：upgradeable / initializer / reinitializer / _disableInitializers / takeover / proxy / OpenZeppelin
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-path test/vulns/D17_InitVuln.t.sol -vvv
+  forge test --match-path test/vulns/D17_GoodInitVuln.t.sol -vvv
+  ```
 
 ---
 
