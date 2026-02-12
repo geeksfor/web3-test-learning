@@ -122,7 +122,26 @@
   forge test --match-path test/vulns/D17_InitVuln.t.sol -vvv
   forge test --match-path test/vulns/D17_GoodInitVuln.t.sol -vvv
   ```
+  ### 2026-02-12
+  **D17（进阶）| Proxy / delegatecall / UUPS onlyProxy（贴近生产）**
+  - 📄 文档：[`2026-02-12-D17-proxy-uups-onlyproxy-notes.md`](./2026-02-12-D17-proxy-uups-onlyproxy-notes.md)
+  - 📦 代码（建议落位）：
+    - `src/vulns/D17_UUPS_OZ.sol`（OZ-only UUPS 示例：initializer + _authorizeUpgrade + _disableInitializers）
+    - `src/mini/SimpleProxy.sol`、`src/mini/MinimalImpl.sol`（最小 Proxy/Impl 便于理解 delegatecall，可选）
+  - 🧪 测试（建议落位）：
+    - `test/vulns/D17_OZ_UUPS_OnlyProxy.t.sol`（initializer onlyOnce + onlyProxy + upgrade 权限）
+    - `test/mini/ProxyDelegatecall.t.sol`（delegatecall 上下文与 storage 归属验证，可选）
+  - 关键词：proxy / delegatecall / storage collision / EIP-1967 / initializer / UUPS / onlyProxy / upgradeToAndCall / OZ 5.5
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
 
+  # 生产贴近：OZ-only UUPS（initializer + onlyProxy）
+  forge test --match-contract D17_OZ_UUPS_OnlyProxy_Test -vvv
+
+  # 原理验证：最小 proxy / delegatecall（可选）
+  forge test --match-path test/mini/ProxyDelegatecall.t.sol -vvv
+  ```
 ---
 
 ## 使用建议
