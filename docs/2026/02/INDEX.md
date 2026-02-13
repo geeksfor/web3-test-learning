@@ -144,6 +144,20 @@
   ```
 ---
 
+### 2026-02-13
+- **D18 | ERC20 approve 竞态：演示“先改额度被夹” + 安全改法（先置 0 / increaseAllowance）**
+  - 📄 文档：[`2026-02-13-D18-ERC20-approve-race-condition.md`](./2026-02-13-D18-ERC20-approve-race-condition.md)
+  - 📦 代码：
+    - `src/erc20/SimpleERC20ApproveRace.sol`
+    - `src/erc20/AllowanceSpender.sol`
+  - 🧪 测试：`test/vulns/ERC20ApproveRace.t.sol`
+  - 关键词：erc20 / approve / allowance / race-condition / sandwich / increaseAllowance / audit
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-path test/vulns/ERC20ApproveRace.t.sol -vvv
+  ```
+
 ## 使用建议
 - 每天新增一篇文档后，在本 INDEX 里追加一条记录（日期 + D# + 标题 + 关键词）
 - 若你按「每月一个文件夹」组织：建议路径 `docs/2026/02/index.md`（或 `INDEX.md`），统一大小写，避免跨平台大小写差异问题
