@@ -158,6 +158,17 @@
   forge test --match-path test/vulns/ERC20ApproveRace.t.sol -vvv
   ```
 
+  ### 2026-02-14
+  - **D19 | 整数精度/舍入：Vault share 计算 + Fee 舍入导致可利用行为（含审计视角 & Q&A）**  
+  - 📄 文档：[`2026-02-14-D19-Rounding-Precision-Fee-Arbitrage.md`](./2026-02-14-D19-Rounding-Precision-Fee-Arbitrage.md)  
+  - 📦 代码：`test/vulns/D19_RoundingVault*.t.sol`，`test/vulns/D19_FeeRounding*.t.sol`（按你的实际文件名调整）  
+  - 关键词：vault / shares / totalAssets / totalShares / donation / floor / ceil / mulDiv / dust / fee rounding / split
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-path test/vulns/D19_*.t.sol -vvv
+  ```
+
 ## 使用建议
 - 每天新增一篇文档后，在本 INDEX 里追加一条记录（日期 + D# + 标题 + 关键词）
 - 若你按「每月一个文件夹」组织：建议路径 `docs/2026/02/index.md`（或 `INDEX.md`），统一大小写，避免跨平台大小写差异问题
