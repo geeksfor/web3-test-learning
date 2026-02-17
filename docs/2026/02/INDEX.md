@@ -169,6 +169,17 @@
   forge test --match-path test/vulns/D19_*.t.sol -vvv
   ```
 
+### 2026-02-17
+- **D22 | Oracle 操纵（简化版）：可控价格源导致借贷异常（操纵前后资产变化断言）**  
+  - 📄 文档：[`2026-02-17-D22-Oracle-manipulation.md`](./2026-02-17-D22-Oracle-manipulation.md)  
+  - 📦 代码：`src/vulns/D22_MockOracle.sol`, `src/vulns/D22_VulnerableLending.sol`, `src/vulns/D22_SimpleERC20.sol`  
+  - 🧪 测试：`test/vulns/D22_OracleManipulation.t.sol`  
+  - 关键词：oracle / manipulation / lending / ltv / spot vs twap / defi  
+  - ▶️ 运行：
+  ```bash
+  forge test --match-path test/vulns/D22_OracleManipulation.t.sol -vvv
+  ```
+
 ## 使用建议
 - 每天新增一篇文档后，在本 INDEX 里追加一条记录（日期 + D# + 标题 + 关键词）
 - 若你按「每月一个文件夹」组织：建议路径 `docs/2026/02/index.md`（或 `INDEX.md`），统一大小写，避免跨平台大小写差异问题
