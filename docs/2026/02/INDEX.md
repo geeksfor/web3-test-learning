@@ -183,3 +183,16 @@
 ## 使用建议
 - 每天新增一篇文档后，在本 INDEX 里追加一条记录（日期 + D# + 标题 + 关键词）
 - 若你按「每月一个文件夹」组织：建议路径 `docs/2026/02/index.md`（或 `INDEX.md`），统一大小写，避免跨平台大小写差异问题
+
+- **D23 | Flash Loan 影响：同一交易内操纵价格/余额导致可套利（Route A + Route B）**
+  - 📄 文档：[`2026-02-17-D23-FlashLoan-impact-RouteA-RouteB.md`](./2026-02-17-D23-FlashLoan-impact-RouteA-RouteB.md)
+  - 📦 Route A：`labs/foundry-labs/src/d23/*`
+  - 🧪 Route A：`labs/foundry-labs/test/d23/D23_FlashLoanDonation.t.sol`
+  - 📦 Route B：`labs/foundry-labs/src/d23b/*`
+  - 🧪 Route B：`labs/foundry-labs/test/d23/D23_FlashLoanSpotOracle.t.sol`
+  - 关键词：flash-loan / oracle / AMM / spot-price / donation / vault / lending / foundry
+  - ▶️ 运行（Route B）：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D23_FlashLoanSpotOracle_Test -vvv
+  ```
