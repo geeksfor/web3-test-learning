@@ -196,3 +196,14 @@
   cd labs/foundry-labs
   forge test --match-contract D23_FlashLoanSpotOracle_Test -vvv
   ```
+
+- **D24 | Slippage 缺失：swap 没有 minOut（任意价格都成交）+ Sandwich 示例 + 修复（minOut + deadline）**  
+  - 📄 文档：[`2026-02-18-D24-Slippage-NoMinOut-Sandwich-Fix.md`](./2026-02-18-D24-Slippage-NoMinOut-Sandwich-Fix.md)  
+  - 📦 代码（建议路径）：`labs/foundry-labs/src/vulns/D24_SimpleAMM.sol`、`labs/foundry-labs/src/vulns/D24_SimpleERC20.sol`  
+  - 🧪 测试（建议路径）：`labs/foundry-labs/test/vulns/D24_NoSlippageProtectionVuln.t.sol`、`labs/foundry-labs/test/vulns/D24_SlippageProtectionFixed.t.sol`  
+  - 关键词：amm / slippage / minOut / deadline / sandwich / mev / expectRevert  
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D24_ -vvv
+  ```
