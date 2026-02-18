@@ -207,3 +207,10 @@
   cd labs/foundry-labs
   forge test --match-contract D24_ -vvv
   ```
+  - **D25 | DoS（gas grief / 大循环）：数组无限增长导致关键函数不可用；“达到阈值后必失败”**  
+  - 📄 文档：`2026-02-18-D25-DoS-gas-grief-unbounded-loop.md`
+  - 📦 关键词：dos / gas griefing / unbounded loop / pagination / cursor / out-of-gas / foundry
+  - ▶️ 运行：
+  ```bash
+  forge test --match-contract D25_GasGrief_Test -vvv
+  ```
