@@ -214,3 +214,12 @@
   ```bash
   forge test --match-contract D25_GasGrief_Test -vvv
   ```
+
+- **D26 | 时间依赖：block.timestamp 被滥用 + “矿工可操控窗口”测试（vm.warp）**  
+  - 📄 文档：[`2026-02-19-D26-timestamp-dependency.md`](./2026-02-19-D26-timestamp-dependency.md)  
+  - 📦 代码（建议）：`src/vulns/D26_TimestampWindowVuln.sol` / `src/vulns/D26_TimestampWindowFixed.sol`  
+  - 🧪 测试（建议）：`test/vulns/D26_TimestampWindow.t.sol`  
+  - 关键词：timestamp / time-dependency / boundary / slot / epoch / vm.warp  
+  - ▶️ 运行：
+  ```bash
+  forge te
