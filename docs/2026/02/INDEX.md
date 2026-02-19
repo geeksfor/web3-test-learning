@@ -257,3 +257,14 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract D31_ReplayProtection_Test -vvv
   ```
+
+  - **D32 | 跨链消息重放防护：processed[messageId]=true + 回归测试**  
+  - 📄 文档：[`2026-02-20-D32-replay-protection-processed.md`](./2026-02-20-D32-replay-protection-processed.md)  
+  - 📦 代码（参考路径）：`src/bridge/BridgeReceiverProtected.sol`  
+  - 🧪 测试（参考路径）：`test/bridge/BridgeReceiverProtected.t.sol`  
+  - 关键词：bridge / replay-protection / messageId / nonce / processed / expectRevert / state-unchanged  
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract BridgeReceiverProtectedTest -vvv
+  ```
