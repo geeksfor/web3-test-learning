@@ -237,3 +237,14 @@
 ```bash
 forge test --match-contract D29_CrossChainMessageModel_Test -vvv
 ```
+
+- **D30 | Normal Cross-Chain Happy Path（Burn/Mint or Lock/Release）**
+  - 📄 文档：[`2026-02-19-D30-NormalCrossChain-BurnMint.md`](./2026-02-19-D30-NormalCrossChain-BurnMint.md)
+  - 📦 示例代码：`src/bridge/*`（MockEndpoint + Bridge + Token）
+  - 🧪 测试：`test/bridge/D30_NormalCrossChain_BurnMint.t.sol`
+  - 关键词：crosschain / endpoint / lzReceive / trustedSrcApp / abi.encode / abi.decode / happy-path
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D30_NormalCrossChain_BurnMint_Test -vvv
+  ```
