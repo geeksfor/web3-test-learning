@@ -223,3 +223,17 @@
   - ▶️ 运行：
   ```bash
   forge te
+
+## D29 | 复习跨链消息模型：srcChainId/srcApp/nonce/payload/messageId；确定 mock 结构
+- 📄 文档：[`2026-02-19-D29-crosschain-message-model-mock.md`](./2026-02-19-D29-crosschain-message-model-mock.md)
+- 📦 合约建议：
+  - `src/mocks/lz/ILZReceiver.sol`
+  - `src/mocks/lz/MockLZEndpoint.sol`
+  - `src/bridge/BridgeSender.sol`
+  - `src/bridge/BridgeReceiver.sol`
+- 🧪 测试建议：`test/bridge/D29_CrossChainMessageModel.t.sol`
+- 关键词：crosschain / messageId / nonce / payload / trusted remote / replay / mock endpoint
+- ▶️ 运行：
+```bash
+forge test --match-contract D29_CrossChainMessageModel_Test -vvv
+```
