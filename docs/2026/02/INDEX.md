@@ -248,3 +248,12 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract D30_NormalCrossChain_BurnMint_Test -vvv
   ```
+
+ **D31 | 重放同一消息（Replay）防护测试：expectRevert + 状态不变（余额、totalSupply）**  
+  - 📄 文档：[`2026-02-19-D31-crosschain-replay-protection.md`](./2026-02-19-D31-crosschain-replay-protection.md)
+  - 关键词：replay / messageId / processed / expectRevert / state-unchanged
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D31_ReplayProtection_Test -vvv
+  ```
