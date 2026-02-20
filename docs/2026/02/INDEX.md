@@ -285,3 +285,14 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract CrossChainSecurityChecklistTest -vvv
   ```
+
+  - **D36 | EIP-712 基础：domain separator、typed data；最小 verify 合约 + 正常验签测试**  
+  - 📄 文档：[`2026-02-20-D36-EIP712-basics-min-verify.md`](./2026-02-20-D36-EIP712-basics-min-verify.md)  
+  - 📦 代码：`labs/foundry-labs/src/eip712/D36_MinEIP712Verifier.sol`  
+  - 🧪 测试：`labs/foundry-labs/test/eip712/D36_MinEIP712Verifier.t.sol`  
+  - 关键词：eip712 / domainSeparator / typedData / typehash / digest / ecrecover / ecdsa / nonce / deadline  
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D36_MinEIP712Verifier_Test -vvv
+  ```
