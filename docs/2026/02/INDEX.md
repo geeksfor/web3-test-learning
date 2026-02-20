@@ -277,3 +277,11 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   ```bash
   forge test --match-contract D33_DomainSeparation_Replay_Test -vvv
   ```
+  - **D34 | 跨链安全测试 Checklist（nonce、domain separation、endpoint 权限、重放表）**
+  - 📄 文档：[`2026-02-20-D34-crosschain-security-test-checklist.md`](./2026-02-20-D34-crosschain-security-test-checklist.md)
+  - 关键词：crosschain / security / nonce / domain-separation / endpoint / replay / processed
+  - ▶️ 运行（若你把测试模板落地到 test/ 目录）：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract CrossChainSecurityChecklistTest -vvv
+  ```
