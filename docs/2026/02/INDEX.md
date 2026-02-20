@@ -296,3 +296,13 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract D36_MinEIP712Verifier_Test -vvv
   ```
+  - **D37 | Nonce 重放：不带 nonce 的错误实现 → 同签名可重复；攻击测试 + 修复回归（2026-02-20）**
+  - 📄 文档：[`2026-02-20-D37-nonce-replay.md`](./2026-02-20-D37-nonce-replay.md)
+  - 📦 合约：`src/vulns/D37_NonceReplayVuln.sol` / `src/vulns/D37_NonceReplayFixed.sol`
+  - 🧪 测试：`test/vulns/D37_NonceReplay.t.sol`
+  - 关键词：replay / nonce / signature / ECDSA / MessageHashUtils / custom error
+  - ▶️ 运行：
+    ```bash
+    cd labs/foundry-labs
+    forge test --match-contract D37_NonceReplay_Test -vvv
+    ```
