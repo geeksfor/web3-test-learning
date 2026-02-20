@@ -268,3 +268,12 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract BridgeReceiverProtectedTest -vvv
   ```
+  - **D33 | 跨 app 重放 / 跨链域隔离（messageId 含 srcApp/dstApp/chainId）**
+  - 📄 文档：[`2026-02-20-D33-crossapp-replay-domain-separation.md`](./2026-02-20-D33-crossapp-replay-domain-separation.md)
+  - 📦 代码（建议路径）：`src/bridge/MessageIdLib.sol`、`src/bridge/BridgeReceiver.sol`
+  - 🧪 测试（建议路径）：`test/bridge/D33_DomainSeparation_Replay.t.sol`
+  - 关键词：replay / domain-separation / messageId / srcApp / dstApp / chainId
+  - ▶️ 运行：
+  ```bash
+  forge test --match-contract D33_DomainSeparation_Replay_Test -vvv
+  ```
