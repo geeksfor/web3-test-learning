@@ -317,3 +317,13 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   ```bash
   forge test --match-contract D38_DomainSeparation_Test -vvv
   ```
+  - **D39 | EIP-2612 permit：nonce / deadline + Foundry 测试（OZ ERC20Permit）**  
+  - 📄 文档：[`2026-02-21-D39-EIP2612-permit-nonce-deadline.md`](./2026-02-21-D39-EIP2612-permit-nonce-deadline.md)  
+  - 📦 代码：`labs/foundry-labs/src/erc20/PermitERC20.sol`  
+  - 🧪 测试：`labs/foundry-labs/test/erc20/PermitERC20.permit.t.sol`  
+  - 关键词：eip2612 / permit / eip712 / nonce / deadline / replay / openzeppelin  
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract PermitERC20_PermitTest -vvv
+  ```
