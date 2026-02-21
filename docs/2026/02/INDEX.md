@@ -306,3 +306,14 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
     cd labs/foundry-labs
     forge test --match-contract D37_NonceReplay_Test -vvv
     ```
+  - **D38 | 域隔离：deadline/chainId/contract address（换链/换合约重放示例）**
+  - 📄 文档：[`2026-02-21-D38-domain-separation-deadline-chainid-contract.md`](./2026-02-21-D38-domain-separation-deadline-chainid-contract.md)
+  - 📦 代码：
+    - `src/vulns/D38_DomainSeparationBad.sol`
+    - `src/fixed/D38_DomainSeparationGood.sol`
+  - 🧪 测试：`test/vulns/D38_DomainSeparation.t.sol`
+  - 关键词：deadline / chainId / address(this) / domain separation / replay / ecrecover / r,s,v
+  - ▶️ 运行：
+  ```bash
+  forge test --match-contract D38_DomainSeparation_Test -vvv
+  ```
