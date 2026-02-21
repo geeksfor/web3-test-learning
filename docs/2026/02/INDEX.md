@@ -337,3 +337,16 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract D40_ParamInjection_Test -vvv
   ```
+
+  - **D43 | 最小 AMM（x*y=k）+ Swap 基本正确性（含审计视角）**
+  - 📄 文档：`2026-02-21-D43-Minimal-AMM-XYK-swap-correctness.md`
+  - 📦 代码（建议路径）：
+    - `labs/foundry-labs/src/amm/SimpleAMMXYK.sol`
+    - `labs/foundry-labs/src/tokens/SimpleERC20.sol`
+  - 🧪 测试：`labs/foundry-labs/test/amm/D43_SimpleAMMXYK.t.sol`
+  - 关键词：amm / dex / xyk / constant product / swap / slippage / minOut / uint112 / rounding
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D43_SimpleAMMXYK_Test -vvv
+  ```
