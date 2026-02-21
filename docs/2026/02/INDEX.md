@@ -366,3 +366,21 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
     forge test --match-path test/vulns/D44_SlippageNoMinOut.t.sol -vvv
     forge test --match-path test/fixes/D44_SlippageWithMinOut.t.sol -vvv
     ```
+
+  - **D45 | 价格操纵：小池子/低流动性造成价格偏移；TWAP 修复（spot vs TWAP）**
+  - 📄 文档：`docs/2026/02/2026-02-22-D45-price-manipulation-twap.md`
+  - 📦 代码建议路径：
+    - `labs/foundry-labs/src/amm/SimpleAMMXYK.sol`
+    - `labs/foundry-labs/src/amm/SimpleAMMXYK_TWAP.sol`
+    - `labs/foundry-labs/src/vulns/D45_SpotOracleLendingVuln.sol`
+    - `labs/foundry-labs/src/fixed/D45_SpotOracleLendingFixed_TWAP.sol`
+  - 🧪 测试：
+    - `labs/foundry-labs/test/vulns/D45_PriceManipulation.t.sol`
+    - `labs/foundry-labs/test/vulns/D45_PriceManipulation_Fixed.t.sol`
+  - 关键词：price manipulation / low liquidity / spot oracle / TWAP / cumulative price / vm.warp
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D45_PriceManipulation_Test -vvv
+  forge test --match-contract D45_PriceManipulation_Fixed_Test -vvv
+  ```
