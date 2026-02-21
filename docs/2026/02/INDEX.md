@@ -327,3 +327,13 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract PermitERC20_PermitTest -vvv
   ```
+  - **D40 | 参数注入：签名内容与执行内容不一致（to/amount 未纳入签名）**  
+  - 📄 文档：[`2026-02-21-D40-ParamInjection-signature-mismatch.md`](./2026-02-21-D40-ParamInjection-signature-mismatch.md)
+  - 📦 代码：`labs/foundry-labs/src/vulns/D40_ParamInjectionVuln.sol` + `labs/foundry-labs/src/fixed/D40_ParamInjectionFixed.sol`
+  - 🧪 测试：`labs/foundry-labs/test/vulns/D40_ParamInjection.t.sol`
+  - 关键词：parameter injection / intent mismatch / to&amount signed / nonce / deadline / domain separation
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D40_ParamInjection_Test -vvv
+  ```
