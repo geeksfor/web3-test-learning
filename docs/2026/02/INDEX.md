@@ -350,3 +350,19 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract D43_SimpleAMMXYK_Test -vvv
   ```
+
+  - **D44 | Slippage / minOut：没有 minOut 的风险测试（先红测）+ 修复回归**
+  - 📄 文档：`docs/2026/02/2026-02-21-D44-slippage-minout.md`
+  - 📦 代码：
+    - `labs/foundry-labs/src/vulns/D44_SlippageNoMinOut.sol`
+    - `labs/foundry-labs/src/fixes/D44_SlippageWithMinOut.sol`
+  - 🧪 测试：
+    - `labs/foundry-labs/test/vulns/D44_SlippageNoMinOut.t.sol`
+    - `labs/foundry-labs/test/fixes/D44_SlippageWithMinOut.t.sol`
+  - 关键词：amm / x*y=k / slippage / minOut / sandwich / mev / deadline / regression
+  - ▶️ 运行：
+    ```bash
+    cd labs/foundry-labs
+    forge test --match-path test/vulns/D44_SlippageNoMinOut.t.sol -vvv
+    forge test --match-path test/fixes/D44_SlippageWithMinOut.t.sol -vvv
+    ```
