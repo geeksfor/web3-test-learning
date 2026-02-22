@@ -407,3 +407,8 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
     cd labs/foundry-labs
     forge test --match-contract D47_KInvariant_Test -vvv
     ```
+
+  ## D50（Fork 测试）
+- **D50：Foundry Fork 测试入门（createSelectFork + 固定区块）**  
+  - 文件：`docs/2026/02/D50_Foundry_Fork_Test_createSelectFork.md`  
+  - 关键词：fork / createSelectFork / pinned block / RPC / stateRoot / 可复现测试
