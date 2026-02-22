@@ -384,3 +384,16 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   forge test --match-contract D45_PriceManipulation_Test -vvv
   forge test --match-contract D45_PriceManipulation_Fixed_Test -vvv
   ```
+
+## 2026-02-22
+
+- **D46 | MEV/夹子（Sandwich）简化复现：先交易改变价格再执行 victim；断言 victim 实际成交恶化（并给出 minOut+deadline 修复）**
+  - 📄 学习文档：`2026-02-22-D46-MEV-Sandwich.md`
+  - 🧪 测试：`test/vulns/D46_MEVSandwich.t.sol`
+  - 📦 合约：`src/vulns/D46_MEVSandwich.sol`
+  - 关键词：MEV / sandwich / front-run / back-run / mempool / slippage / minOut / deadline
+  - ▶️ 运行：
+  ```bash
+  cd labs/foundry-labs
+  forge test --match-contract D46_MEVSandwich_Test -vvv
+  ```
