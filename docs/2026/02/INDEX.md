@@ -397,3 +397,13 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   cd labs/foundry-labs
   forge test --match-contract D46_MEVSandwich_Test -vvv
   ```
+
+  - **D47 | Invariant：k 不应下降（考虑 fee 时的变化规则）**
+  - 📄 文档：`2026-02-22-D47-KInvariant-k-not-decrease.md`
+  - 📦 关键词：AMM / x*y=k / invariant / StdInvariant / handler / fee-on-input / rounding
+  - 🧪 测试：`test/vulns/D47_KInvariant.t.sol`
+  - ▶️ 运行：
+    ```bash
+    cd labs/foundry-labs
+    forge test --match-contract D47_KInvariant_Test -vvv
+    ```
