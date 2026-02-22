@@ -412,3 +412,10 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
 - **D50：Foundry Fork 测试入门（createSelectFork + 固定区块）**  
   - 文件：`docs/2026/02/D50_Foundry_Fork_Test_createSelectFork.md`  
   - 关键词：fork / createSelectFork / pinned block / RPC / stateRoot / 可复现测试
+
+- **D51**：`docs/2026/02/D51_ReadOnlyVerification_UniswapV2.md`
+  - 只读验证概念与不变量思维
+  - mainnet fork 用法（latest vs 固定区块）
+  - 如何定位 Pair 地址（Factory.getPair）
+  - Uniswap V2 Pair 常见健康检查断言
+  - 今日问答汇总：reserve 同步、emit/view、接口标准性、fork 全局状态
