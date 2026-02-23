@@ -428,3 +428,22 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
 - **D53**：Oracle 更新频率 / 价格跳变 —— 更新前后清算条件变化测试  
   - 文档：`D53-oracle-update-frequency.md`  
   - 关键词：oracle / heartbeat / stale price / price jump / liquidation / TWAP / circuit breaker
+
+## D54：Vault share 小额存取款舍入（Rounding）边界回归
+
+- 主题：ERC4626 / Vault share↔asset 换算、整数除法取整、donation 扭曲比例、小额边界吞资产
+- 产出：
+  - 学习文档：`D54_vault-share-rounding.md`
+  - 示例代码：
+    - `src/D54_VaultRounding.sol`（vuln + fixed）
+    - `test/vulns/D54_VaultRounding.t.sol`（复现 + 回归）
+- 关键断言：
+  - donation 后小额 deposit 在漏洞版会“收资产但不给 share”
+  - 修复版必须 revert（ZeroShares），避免吞资产
+  - 正常比例下小额 deposit 不被误伤
+
+### 关联审计点（Checklist 速记）
+- shares/assets 是否可能为 0？
+- totalAssets 是否受 donation 影响？
+- deposit/mint 与 withdraw/redeem 是否都有最小输出保护？
+- rounding 策略是否一致、是否可被套利或 DoS？
