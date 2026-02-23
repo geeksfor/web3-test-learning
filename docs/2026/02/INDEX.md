@@ -419,3 +419,8 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
   - 如何定位 Pair 地址（Factory.getPair）
   - Uniswap V2 Pair 常见健康检查断言
   - 今日问答汇总：reserve 同步、emit/view、接口标准性、fork 全局状态
+
+- **D52 借贷场景：抵押率边界 / 清算触发（简化模型）**
+  - 文档：`docs/2026/02/D52_Lending_CollateralBoundary_Liquidation.md`
+  - 关键点：LTV vs LT、边界符号（> / >=）、WAD 单位换算、清算（repay→seize + bonus）、closeFactor、调试日志（emit log / console2 / event）
+  - 标签：`[lending] [ltv] [liquidation] [oracle] [wad] [foundry]`
