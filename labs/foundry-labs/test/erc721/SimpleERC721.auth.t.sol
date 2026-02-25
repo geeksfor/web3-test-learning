@@ -17,8 +17,7 @@ contract GoodReceiver is IERC721Receiver {
 }
 
 contract BadReceiver {
-    // 不实现 onERC721Received
-
+    // 不实现 onERC721Receiveds
     }
 
 contract SimpleERC721AuthTest is Test {
