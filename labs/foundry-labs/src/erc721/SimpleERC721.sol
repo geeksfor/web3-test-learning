@@ -86,8 +86,8 @@ contract SimpleERC721 {
         if (to == address(0)) revert ZeroAddress();
         address owner = ownerOf(tokenId);
         if (owner != from) revert InvalidFrom();
-        bool authorized =
-            (msg.sender == owner) || (msg.sender == _tokenApprovals[tokenId]) || (_operatorApprovals[owner][msg.sender]);
+        bool authorized = (msg.sender == owner) || (msg.sender == _tokenApprovals[tokenId])
+            || (_operatorApprovals[owner][msg.sender]);
         if (!authorized) revert NotOwnerNorApproved();
 
         // 清单 token 授权（非常关键的测试点）
