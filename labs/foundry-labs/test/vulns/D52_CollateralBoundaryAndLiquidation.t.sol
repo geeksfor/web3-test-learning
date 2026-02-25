@@ -22,13 +22,7 @@ contract D52_CollateralBoundaryAndLiquidation_Test is Test {
 
         // LTV 75%, LT 80%, closeFactor 50%, bonus 5%
         pool = new D52_SimpleLending(
-            IERC20(address(collateral)),
-            IERC20(address(usd)),
-            oracle,
-            0.75e18,
-            0.80e18,
-            0.50e18,
-            0.05e18
+            IERC20(address(collateral)), IERC20(address(usd)), oracle, 0.75e18, 0.8e18, 0.5e18, 0.05e18
         );
 
         // 价格：$2000 / COL
@@ -92,9 +86,7 @@ contract D52_CollateralBoundaryAndLiquidation_Test is Test {
         assertTrue(pool.isLiquidatable(alice));
     }
 
-    function test_liquidate_repays_and_seizes_collateral_with_bonus_and_closeFactor()
-        public
-    {
+    function test_liquidate_repays_and_seizes_collateral_with_bonus_and_closeFactor() public {
         // 建仓
         vm.startPrank(alice);
         pool.deposit(1e18);
@@ -130,9 +122,7 @@ contract D52_CollateralBoundaryAndLiquidation_Test is Test {
         assertEq(collateral.balanceOf(liq) - liqColBefore, expectedSeize);
     }
 
-    function test_liquidation_boundary_debt_equals_threshold_not_liquidatable()
-        public
-    {
+    function test_liquidation_boundary_debt_equals_threshold_not_liquidatable() public {
         // 让 debt == collateralValue * LT 恰好等于阈值
         // 抵押 1 COL，price=2000 => collateralValue=2000
         // threshold = 2000*0.8=1600

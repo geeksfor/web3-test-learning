@@ -104,24 +104,14 @@ contract SimpleERC721ApprovalsTest is Test {
     function test_approve_nonexistentToken_reverts() public {
         uint256 missingTokenId = 3;
         vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                SimpleERC721.NonexistentToken.selector,
-                missingTokenId
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC721.NonexistentToken.selector, missingTokenId));
         nft.approve(bob, missingTokenId);
     }
 
     function test_getApproved_nonexistentToken_reverts() public {
         uint256 missingTokenId = type(uint256).max;
         // vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                SimpleERC721.NonexistentToken.selector,
-                missingTokenId
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC721.NonexistentToken.selector, missingTokenId));
         nft.getApproved(missingTokenId);
     }
 

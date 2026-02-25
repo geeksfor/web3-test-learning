@@ -29,13 +29,7 @@ contract PermitERC20_PermitTest is Test {
         uint256 nonceBefore = token.nonces(owner);
 
         // 1) 计算 EIP-712 digest（ERC20Permit 提供）
-        bytes32 digest = _permitDigest(
-            owner,
-            spender,
-            value,
-            nonceBefore,
-            deadline
-        );
+        bytes32 digest = _permitDigest(owner, spender, value, nonceBefore, deadline);
 
         // 2) 链下签名：拿到 (v,r,s)
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ownerPk, digest);
@@ -53,13 +47,7 @@ contract PermitERC20_PermitTest is Test {
         uint256 deadline = block.timestamp + 1 days;
 
         uint256 nonceBefore = token.nonces(owner);
-        bytes32 digest = _permitDigest(
-            owner,
-            spender,
-            value,
-            nonceBefore,
-            deadline
-        );
+        bytes32 digest = _permitDigest(owner, spender, value, nonceBefore, deadline);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ownerPk, digest);
 
         // 第一次成功
@@ -78,13 +66,7 @@ contract PermitERC20_PermitTest is Test {
         uint256 deadline = block.timestamp + 10; // 很短
 
         uint256 nonceBefore = token.nonces(owner);
-        bytes32 digest = _permitDigest(
-            owner,
-            spender,
-            value,
-            nonceBefore,
-            deadline
-        );
+        bytes32 digest = _permitDigest(owner, spender, value, nonceBefore, deadline);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ownerPk, digest);
 
         // 时间推进到过期之后
@@ -95,20 +77,16 @@ contract PermitERC20_PermitTest is Test {
     }
 
     // --- helpers ---
-    function _permitDigest(
-        address _owner,
-        address _spender,
-        uint256 _value,
-        uint256 _nonce,
-        uint256 _deadline
-    ) internal view returns (bytes32) {
+    function _permitDigest(address _owner, address _spender, uint256 _value, uint256 _nonce, uint256 _deadline)
+        internal
+        view
+        returns (bytes32)
+    {
         // ERC20Permit 实现了 EIP-712：
         // digest = keccak256("\x19\x01" || DOMAIN_SEPARATOR || structHash)
         bytes32 structHash = keccak256(
             abi.encode(
-                keccak256(
-                    "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
-                ),
+                keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"),
                 _owner,
                 _spender,
                 _value,
@@ -119,9 +97,6 @@ contract PermitERC20_PermitTest is Test {
 
         bytes32 domainSeparator = token.DOMAIN_SEPARATOR();
 
-        return
-            keccak256(
-                abi.encodePacked("\x19\x01", domainSeparator, structHash)
-            );
+        return keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
     }
 }

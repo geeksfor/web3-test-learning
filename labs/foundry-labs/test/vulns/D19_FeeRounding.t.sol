@@ -26,11 +26,7 @@ contract D19_FeeRoundingTest is Test {
 
         assertEq(feeSplit, 0);
         assertGt(feeSingle, 0);
-        assertLt(
-            feeSplit,
-            feeSingle,
-            "split should reduce fee in bad rounding"
-        );
+        assertLt(feeSplit, feeSingle, "split should reduce fee in bad rounding");
     }
 
     function test_fee_boundaries_small_amounts() public {

@@ -5,11 +5,7 @@ import "forge-std/console2.sol";
 interface IERC20 {
     function transfer(address to, uint256 amount) external returns (bool);
 
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amount
-    ) external returns (bool);
+    function transferFrom(address from, address to, uint256 amount) external returns (bool);
 
     function balanceOf(address who) external view returns (uint256);
 }
@@ -53,11 +49,7 @@ contract D52_TestERC20 {
         return true;
     }
 
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amount
-    ) external returns (bool) {
+    function transferFrom(address from, address to, uint256 amount) external returns (bool) {
         uint256 a = allowance[from][msg.sender];
         if (a != type(uint256).max) allowance[from][msg.sender] = a - amount;
         balanceOf[from] -= amount;
@@ -120,8 +112,9 @@ contract D52_SimpleLending {
         uint256 maxDebtValue = (collateralValueWad(msg.sender) * ltvWad) / WAD; // $ value in WAD
         uint256 newDebtValue = newDebt; // debt token assumed $1 => value = amount * 1e18
 
-        if (newDebtValue > maxDebtValue)
+        if (newDebtValue > maxDebtValue) {
             revert NotHealthy(newDebtValue, maxDebtValue);
+        }
 
         debtOf[msg.sender] = newDebt;
         // 简化：借到的“美元”债务 token 直接转给用户（测试里预先铸给池子）

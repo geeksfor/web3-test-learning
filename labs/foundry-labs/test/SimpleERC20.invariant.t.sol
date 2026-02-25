@@ -60,11 +60,7 @@ contract ERC20Handler is Test {
     }
 
     // 3) burnFrom：spender burn tokenOwner（需要 allowance + balance）
-    function burnFrom(
-        uint256 ownerSeed,
-        uint256 spenderSeed,
-        uint256 amount
-    ) external {
+    function burnFrom(uint256 ownerSeed, uint256 spenderSeed, uint256 amount) external {
         address tokenOwner = _pickUser(ownerSeed);
         address spender = _pickUser(spenderSeed);
         if (tokenOwner == spender) return;
@@ -92,11 +88,7 @@ contract ERC20Handler is Test {
     }
 
     // 4) 普通 transfer（不影响 supply，但有助于打乱余额分布）
-    function transfer(
-        uint256 fromSeed,
-        uint256 toSeed,
-        uint256 amount
-    ) external {
+    function transfer(uint256 fromSeed, uint256 toSeed, uint256 amount) external {
         address from = _pickUser(fromSeed);
         address to = _pickUser(toSeed);
         if (from == to) return;
@@ -140,10 +132,7 @@ contract SimpleERC20InvariantTest is StdInvariant, Test {
 
     // Invariant 1：totalSupply 必须等于 minted-burned
     function invariant_totalSupply_matches_minted_minus_burned() public view {
-        assertEq(
-            token.totalSupply(),
-            handler.mintedSum() - handler.burnedSum()
-        );
+        assertEq(token.totalSupply(), handler.mintedSum() - handler.burnedSum());
     }
 
     // Invariant 2：burnedSum 永远不可能超过 mintedSum

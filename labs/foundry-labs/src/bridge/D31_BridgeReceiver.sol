@@ -19,30 +19,19 @@ contract BridgeReceiver {
         token = IMintable(_token);
     }
 
-    function computeMessageId(
-        uint16 srcChainId,
-        address srcApp,
-        uint64 nonce,
-        bytes calldata payload
-    ) public pure returns (bytes32) {
+    function computeMessageId(uint16 srcChainId, address srcApp, uint64 nonce, bytes calldata payload)
+        public
+        pure
+        returns (bytes32)
+    {
         return keccak256(abi.encode(srcChainId, srcApp, nonce, payload));
     }
 
     /// 模拟跨链入口（你也可以命名为 lzReceive / handle / receiveMessage）
-    function receiveMessage(
-        uint16 srcChainId,
-        address srcApp,
-        uint64 nonce,
-        bytes calldata payload
-    ) external {
+    function receiveMessage(uint16 srcChainId, address srcApp, uint64 nonce, bytes calldata payload) external {
         if (msg.sender != endpoint) revert OnlyEndpoint();
 
-        bytes32 messageId = computeMessageId(
-            srcChainId,
-            srcApp,
-            nonce,
-            payload
-        );
+        bytes32 messageId = computeMessageId(srcChainId, srcApp, nonce, payload);
         if (processed[messageId]) revert AlreadyProcessed(messageId);
         // ✅ 先标记再执行（更安全，避免某些回调类场景的重入二次进入）
         processed[messageId] = true;

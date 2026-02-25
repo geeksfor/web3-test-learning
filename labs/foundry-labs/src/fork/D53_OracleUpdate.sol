@@ -34,11 +34,7 @@ contract SimpleLending {
 
     error StalePrice(uint256 updatedAt, uint256 nowTs);
 
-    constructor(
-        MockOracle _oracle,
-        uint256 _liqThresholdE18,
-        uint256 _maxOracleDelay
-    ) {
+    constructor(MockOracle _oracle, uint256 _liqThresholdE18, uint256 _maxOracleDelay) {
         oracle = _oracle;
         liquidationThresholdE18 = _liqThresholdE18;
         maxOracleDelay = _maxOracleDelay;

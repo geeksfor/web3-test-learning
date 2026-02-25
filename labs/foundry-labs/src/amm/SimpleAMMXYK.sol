@@ -25,11 +25,7 @@ contract SimpleAMMXYK {
 
     event Sync(uint112 r0, uint112 r1);
     event Swap(
-        address indexed sender,
-        address indexed tokenIn,
-        uint256 amountIn,
-        uint256 amountOut,
-        address indexed to
+        address indexed sender, address indexed tokenIn, uint256 amountIn, uint256 amountOut, address indexed to
     );
 
     constructor(address _token0, address _token1, uint16 _feeBps) {
@@ -55,11 +51,7 @@ contract SimpleAMMXYK {
     }
 
     /// @notice 用 token0 换 token1
-    function swap0For1(
-        uint256 amountIn,
-        uint256 minOut,
-        address to
-    ) external returns (uint256 amountOut) {
+    function swap0For1(uint256 amountIn, uint256 minOut, address to) external returns (uint256 amountOut) {
         if (amountIn == 0) revert ZeroAmount();
         if (reserve0 == 0 || reserve1 == 0) revert InsufficientLiquidity();
 
@@ -92,11 +84,7 @@ contract SimpleAMMXYK {
     }
 
     /// @notice 用 token1 换 token0（对称）
-    function swap1For0(
-        uint256 amountIn,
-        uint256 minOut,
-        address to
-    ) external returns (uint256 amountOut) {
+    function swap1For0(uint256 amountIn, uint256 minOut, address to) external returns (uint256 amountOut) {
         if (amountIn == 0) revert ZeroAmount();
         if (reserve0 == 0 || reserve1 == 0) revert InsufficientLiquidity();
 

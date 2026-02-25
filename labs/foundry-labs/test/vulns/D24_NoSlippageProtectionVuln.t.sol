@@ -50,11 +50,7 @@ contract D24_NoSlippageProtection_Vuln_Test is Test {
         uint256 amountInAlice = 10 ether;
 
         // 1) 正常情况下 Alice 预期能拿到多少 B
-        uint256 expectedNormal = amm.getAmountOut(
-            amountInAlice,
-            amm.reserve0(),
-            amm.reserve1()
-        );
+        uint256 expectedNormal = amm.getAmountOut(amountInAlice, amm.reserve0(), amm.reserve1());
 
         // 2) attacker 先 A->B 大额 swap，把价格打歪（让 B 变贵，Alice 换到更少 B）
         vm.prank(attacker);
@@ -63,10 +59,7 @@ contract D24_NoSlippageProtection_Vuln_Test is Test {
         // 3) Alice 用漏洞 swap：没有 minOut，应该仍然成交
         uint256 balBefore = tokenB.balanceOf(alice);
         vm.prank(alice);
-        uint256 outAfter = amm.swapExactIn_NoMinOut(
-            address(tokenA),
-            amountInAlice
-        );
+        uint256 outAfter = amm.swapExactIn_NoMinOut(address(tokenA), amountInAlice);
         uint256 balAfter = tokenB.balanceOf(alice);
 
         assertEq(balAfter - balBefore, outAfter);

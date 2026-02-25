@@ -23,14 +23,9 @@ contract D26_TimestampWindowFixed {
     }
 
     function buy() external payable {
-        require(
-            block.timestamp >= saleStart && block.timestamp <= saleEnd,
-            "not in sale"
-        );
+        require(block.timestamp >= saleStart && block.timestamp <= saleEnd, "not in sale");
         // ✅ 修复点：窗口变粗，不靠“秒级边界”
-        uint256 price = (block.timestamp >= saleEnd - DISCOUNT_WINDOW)
-            ? DISCOUNT_PRICE
-            : FULL_PRICE;
+        uint256 price = (block.timestamp >= saleEnd - DISCOUNT_WINDOW) ? DISCOUNT_PRICE : FULL_PRICE;
 
         require(msg.value == price, "wrong price");
         emit Bought(msg.sender, msg.value, block.timestamp);

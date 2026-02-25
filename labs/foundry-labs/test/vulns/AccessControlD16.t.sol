@@ -34,9 +34,7 @@ contract AccessControlD16Test is Test {
     // =========================
     // Part A: 漏洞证明（未授权调用成功）
     // =========================
-    function test_VULN_attackerCanStealFees_via_setTreasury_then_withdraw()
-        public
-    {
+    function test_VULN_attackerCanStealFees_via_setTreasury_then_withdraw() public {
         // 1) alice 交费，产生 feesAccrued
         vm.prank(alice);
         vuln.pay{value: 10 ether}();
@@ -75,12 +73,7 @@ contract AccessControlD16Test is Test {
     // =========================
     function test_FIXED_attackerCannotSetTreasury() public {
         vm.prank(attacker);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                AccessControlFixed.NotOwner.selector,
-                attacker
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(AccessControlFixed.NotOwner.selector, attacker));
         fixedC.setTreasury(attacker);
 
         // 状态不变
@@ -101,12 +94,7 @@ contract AccessControlD16Test is Test {
 
         // attacker withdraw 失败
         vm.prank(attacker);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                AccessControlFixed.NotOwner.selector,
-                attacker
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(AccessControlFixed.NotOwner.selector, attacker));
         fixedC.withdrawFees();
 
         // feesAccrued 仍然存在
@@ -129,12 +117,7 @@ contract AccessControlD16Test is Test {
 
     function test_FIXED_attackerCannotPause() public {
         vm.prank(attacker);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                AccessControlFixed.NotOwner.selector,
-                attacker
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(AccessControlFixed.NotOwner.selector, attacker));
         fixedC.pause();
     }
 

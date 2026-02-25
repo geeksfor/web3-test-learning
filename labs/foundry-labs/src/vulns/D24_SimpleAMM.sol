@@ -34,11 +34,7 @@ contract SimpleAMM {
         reserve1 = token1.balanceOf(address(this));
     }
 
-    function getAmountOut(
-        uint256 amountIn,
-        uint256 rIn,
-        uint256 rOut
-    ) public pure returns (uint256) {
+    function getAmountOut(uint256 amountIn, uint256 rIn, uint256 rOut) public pure returns (uint256) {
         // amountInWithFee = amountIn * 997
         uint256 amountInWithFee = amountIn * FEE_NUM;
         // out = (amountInWithFee * rOut) / (rIn*1000 + amountInWithFee)
@@ -48,10 +44,7 @@ contract SimpleAMM {
     // --------------------------
     // VULN: 没有 minOut
     // --------------------------
-    function swapExactIn_NoMinOut(
-        address tokenIn,
-        uint256 amountIn
-    ) external returns (uint256 amountOut) {
+    function swapExactIn_NoMinOut(address tokenIn, uint256 amountIn) external returns (uint256 amountOut) {
         bool in0 = (tokenIn == address(token0));
         bool in1 = (tokenIn == address(token1));
         if (!in0 && !in1) revert InvalidToken();
@@ -74,14 +67,13 @@ contract SimpleAMM {
     // --------------------------
     // FIX: 加 minOut + deadline
     // --------------------------
-    function swapExactIn(
-        address tokenIn,
-        uint256 amountIn,
-        uint256 minOut,
-        uint256 deadline
-    ) external returns (uint256 amountOut) {
-        if (block.timestamp > deadline)
+    function swapExactIn(address tokenIn, uint256 amountIn, uint256 minOut, uint256 deadline)
+        external
+        returns (uint256 amountOut)
+    {
+        if (block.timestamp > deadline) {
             revert Expired(block.timestamp, deadline);
+        }
 
         bool in0 = (tokenIn == address(token0));
         bool in1 = (tokenIn == address(token1));

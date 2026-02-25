@@ -22,10 +22,7 @@ contract RoundingVaultBad is ERC20 {
     }
 
     /// @notice 存款：shares = floor(assets * totalSupply / totalAssets)
-    function deposit(
-        uint256 assets,
-        address receiver
-    ) external returns (uint256 shares) {
+    function deposit(uint256 assets, address receiver) external returns (uint256 shares) {
         require(assets > 0, "zero");
         uint256 ts = totalSupply();
         uint256 ta = totalAssets();
@@ -44,11 +41,7 @@ contract RoundingVaultBad is ERC20 {
 
     /// @notice 赎回：assets = ceil(shares * totalAssets / totalSupply)
     /// 这就是坏点：与 deposit 的 floor 方向不一致
-    function redeem(
-        uint256 shares,
-        address receiver,
-        address owner
-    ) external returns (uint256 assets) {
+    function redeem(uint256 shares, address receiver, address owner) external returns (uint256 assets) {
         require(shares > 0, "zero");
         if (msg.sender != owner) {
             uint256 a = allowance(owner, msg.sender);

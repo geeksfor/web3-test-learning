@@ -16,12 +16,7 @@ contract BridgeReceiver is ILZReceiver {
     // 去重：messageId
     mapping(bytes32 => bool) public processed;
 
-    event Received(
-        uint16 srcChainId,
-        address srcApp,
-        uint64 nonce,
-        bytes32 messageId
-    );
+    event Received(uint16 srcChainId, address srcApp, uint64 nonce, bytes32 messageId);
 
     constructor(address _endpoint) {
         endpoint = _endpoint;
@@ -32,16 +27,14 @@ contract BridgeReceiver is ILZReceiver {
         trusted[srcChainId][srcApp] = ok;
     }
 
-    function lzReceive(
-        uint16 srcChainId,
-        address srcApp,
-        uint64 nonce,
-        bytes calldata payload,
-        bytes32 messageId
-    ) external override {
+    function lzReceive(uint16 srcChainId, address srcApp, uint64 nonce, bytes calldata payload, bytes32 messageId)
+        external
+        override
+    {
         if (msg.sender != endpoint) revert NotEndpoint();
-        if (!trusted[srcChainId][srcApp])
+        if (!trusted[srcChainId][srcApp]) {
             revert UntrustedSource(srcChainId, srcApp);
+        }
         if (processed[messageId]) revert AlreadyProcessed(messageId);
 
         processed[messageId] = true;

@@ -19,19 +19,12 @@ contract D38_DomainSeparation_Test is Test {
     }
 
     // -------------- helpers --------------
-    function signBad(
-        address _owner,
-        address _spender,
-        uint256 amount,
-        uint256 nonce,
-        uint256 deadline
-    ) internal returns (bytes memory sig) {
-        bytes32 h = keccak256(
-            abi.encode(_owner, _spender, amount, nonce, deadline)
-        );
-        bytes32 digest = keccak256(
-            abi.encodePacked("\x19Ethereum Signed Message:\n32", h)
-        );
+    function signBad(address _owner, address _spender, uint256 amount, uint256 nonce, uint256 deadline)
+        internal
+        returns (bytes memory sig)
+    {
+        bytes32 h = keccak256(abi.encode(_owner, _spender, amount, nonce, deadline));
+        bytes32 digest = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", h));
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ownerPk, digest);
         sig = abi.encodePacked(r, s, v);
     }
@@ -45,20 +38,8 @@ contract D38_DomainSeparation_Test is Test {
         uint256 nonce,
         uint256 deadline
     ) internal returns (bytes memory sig) {
-        bytes32 h = keccak256(
-            abi.encode(
-                _owner,
-                _spender,
-                amount,
-                nonce,
-                deadline,
-                chainId,
-                verifyingContract
-            )
-        );
-        bytes32 digest = keccak256(
-            abi.encodePacked("\x19Ethereum Signed Message:\n32", h)
-        );
+        bytes32 h = keccak256(abi.encode(_owner, _spender, amount, nonce, deadline, chainId, verifyingContract));
+        bytes32 digest = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", h));
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ownerPk, digest);
         sig = abi.encodePacked(r, s, v);
     }
@@ -103,13 +84,7 @@ contract D38_DomainSeparation_Test is Test {
 
         // ❌ 漏洞：chainId 变了，sig 仍有效（digest 不包含 chainId）
         vm.prank(spender);
-        c.doAction(
-            owner,
-            amount,
-            3,
-            deadline,
-            signBad(owner, spender, amount, 3, deadline)
-        );
+        c.doAction(owner, amount, 3, deadline, signBad(owner, spender, amount, 3, deadline));
         assertEq(c.counter(), amount + amount);
     }
 
@@ -125,15 +100,7 @@ contract D38_DomainSeparation_Test is Test {
         uint256 cid = block.chainid;
 
         // 绑定合约 A 地址 + chainId 的签名
-        bytes memory sigA = signGood(
-            address(a),
-            cid,
-            owner,
-            spender,
-            amount,
-            nonce,
-            deadline
-        );
+        bytes memory sigA = signGood(address(a), cid, owner, spender, amount, nonce, deadline);
 
         vm.prank(spender);
         a.doAction(owner, amount, nonce, deadline, sigA);
@@ -153,15 +120,7 @@ contract D38_DomainSeparation_Test is Test {
         uint256 deadline = block.timestamp + 1 days;
 
         uint256 cid = block.chainid;
-        bytes memory sig = signGood(
-            address(c),
-            cid,
-            owner,
-            spender,
-            amount,
-            nonce,
-            deadline
-        );
+        bytes memory sig = signGood(address(c), cid, owner, spender, amount, nonce, deadline);
 
         vm.prank(spender);
         c.doAction(owner, amount, nonce, deadline, sig);
@@ -182,24 +141,10 @@ contract D38_DomainSeparation_Test is Test {
         uint256 nonce = 1;
         uint256 deadline = block.timestamp - 1; // 已过期
 
-        bytes memory sig = signGood(
-            address(c),
-            block.chainid,
-            owner,
-            spender,
-            amount,
-            nonce,
-            deadline
-        );
+        bytes memory sig = signGood(address(c), block.chainid, owner, spender, amount, nonce, deadline);
 
         vm.prank(spender);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                D38_DomainSeparationGood.Expired.selector,
-                block.timestamp,
-                deadline
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(D38_DomainSeparationGood.Expired.selector, block.timestamp, deadline));
         c.doAction(owner, amount, nonce, deadline, sig);
     }
 }

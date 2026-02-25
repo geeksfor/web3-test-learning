@@ -21,7 +21,7 @@ contract MiniBankVuln {
         require(balanceOf[msg.sender] >= amount, "insufficient");
 
         // 1) interaction - 把钱打出去（会触发对方 fallback/receive）
-        (bool ok, ) = msg.sender.call{value: amount}("");
+        (bool ok,) = msg.sender.call{value: amount}("");
         require(ok, "transfer failed");
 
         // 2) effects - 余额最后才扣（太晚了）
@@ -52,7 +52,7 @@ contract MiniBankCEI {
         balanceOf[msg.sender] -= amount;
 
         // interactions 最后发生
-        (bool ok, ) = msg.sender.call{value: amount}("");
+        (bool ok,) = msg.sender.call{value: amount}("");
         require(ok, "transfer failed");
 
         emit Withdraw(msg.sender, amount);
@@ -86,7 +86,7 @@ contract MiniBankGuarded is SimpleReentrancyGuard {
     function withdraw(uint256 amount) external nonReentrant {
         require(balanceOf[msg.sender] >= amount, "insufficient");
 
-        (bool ok, ) = msg.sender.call{value: amount}("");
+        (bool ok,) = msg.sender.call{value: amount}("");
         require(ok, "transfer failed");
 
         balanceOf[msg.sender] -= amount;

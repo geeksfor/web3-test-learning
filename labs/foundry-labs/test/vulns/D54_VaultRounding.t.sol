@@ -35,9 +35,7 @@ contract D54_VaultRounding_Test is Test {
     }
 
     /// 1) 漏洞复现：donation 之后，小额 deposit -> shares=0，但资产被吞
-    function test_vuln_smallDeposit_afterDonation_mintsZeroShares_butTakesAssets()
-        public
-    {
+    function test_vuln_smallDeposit_afterDonation_mintsZeroShares_butTakesAssets() public {
         // Alice 先存 100，建立 supply
         vm.prank(alice);
         vuln.deposit(100 ether, alice);

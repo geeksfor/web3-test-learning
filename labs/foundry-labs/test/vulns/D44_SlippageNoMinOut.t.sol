@@ -48,9 +48,7 @@ contract D44_SlippageNoMinOut_Test is Test {
 
     /// 失败用例：Alice 看到的报价是基于“当时 reserve”
     /// 但 attacker 先交易改变 reserve，Alice 最终成交变差，且没有 minOut 保护 => 仍然成交
-    function test_vuln_noMinOut_userGetsWorsePrice_butStillExecutes_FAILING()
-        public
-    {
+    function test_vuln_noMinOut_userGetsWorsePrice_butStillExecutes_FAILING() public {
         uint256 amountInAlice = 10 ether;
 
         // Alice 下单前看到的预期输出（报价）
@@ -73,10 +71,6 @@ contract D44_SlippageNoMinOut_Test is Test {
         uint256 minAcceptable = (quotedOut * 99) / 100;
 
         // ❌ 失败点：没有 minOut 时，合约不会帮你挡住差价
-        assertLe(
-            outActual,
-            minAcceptable,
-            "should have been protected by minOut, but it was not"
-        );
+        assertLe(outActual, minAcceptable, "should have been protected by minOut, but it was not");
     }
 }

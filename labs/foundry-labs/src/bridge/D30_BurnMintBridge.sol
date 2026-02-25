@@ -25,12 +25,7 @@ contract BurnMintBridge is ILZReceiver {
         trusted[srcChainId][srcApp] = ok;
     }
 
-    function bridge(
-        uint16 dstChainId,
-        address dstApp,
-        address to,
-        uint256 amount
-    ) external {
+    function bridge(uint16 dstChainId, address dstApp, address to, uint256 amount) external {
         // 这里为了简化：直接 burn msg.sender 的余额
         token.burn(msg.sender, amount);
         bytes memory payload = abi.encode(to, amount);
@@ -40,13 +35,18 @@ contract BurnMintBridge is ILZReceiver {
     function lzReceive(
         uint16 srcChainId,
         address srcApp,
-        uint64 /*nonce*/,
+        uint64,
+        /*nonce*/
         bytes calldata payload,
         bytes32 /*messageId*/
-    ) external override {
+    )
+        external
+        override
+    {
         if (msg.sender != address(endpoint)) revert NotEndpoint();
-        if (!trusted[srcChainId][srcApp])
+        if (!trusted[srcChainId][srcApp]) {
             revert UntrustedSource(srcChainId, srcApp);
+        }
 
         // 业务执行（演示：只解码，不做 token mint）
         (address to, uint256 amount) = abi.decode(payload, (address, uint256));

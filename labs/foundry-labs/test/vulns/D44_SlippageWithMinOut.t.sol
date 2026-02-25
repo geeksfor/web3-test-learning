@@ -53,23 +53,11 @@ contract D44_SlippageWithMinOut_Test is Test {
         // attacker 插队，改变价格
         vm.prank(attacker);
         // attacker 也得用 minOut+deadline，这里给 0 容忍即可（只为改价）
-        amm.swapExactIn(
-            address(t0),
-            500 ether,
-            0,
-            block.timestamp + 1,
-            attacker
-        );
+        amm.swapExactIn(address(t0), 500 ether, 0, block.timestamp + 1, attacker);
 
         // Alice 交易应当因为 Slippage 而 revert
         vm.prank(alice);
         vm.expectRevert();
-        amm.swapExactIn(
-            address(t0),
-            amountInAlice,
-            minOut,
-            block.timestamp + 1,
-            alice
-        );
+        amm.swapExactIn(address(t0), amountInAlice, minOut, block.timestamp + 1, alice);
     }
 }

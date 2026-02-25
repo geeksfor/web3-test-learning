@@ -14,11 +14,7 @@ contract SimpleAMM {
 
     event Sync(uint256 reserve0, uint256 reserve1);
     event Swap(
-        address indexed sender,
-        address indexed inToken,
-        uint256 amountIn,
-        address indexed outToken,
-        uint256 amountOut
+        address indexed sender, address indexed inToken, uint256 amountIn, address indexed outToken, uint256 amountOut
     );
 
     error ZeroAmount();
@@ -49,18 +45,14 @@ contract SimpleAMM {
     /// @param inToken address(token0) or address(token1)
     /// @param amountIn amount of inToken
     /// @return amountOut amount of the other token
-    function swapExactIn(
-        address inToken,
-        uint256 amountIn
-    ) external returns (uint256 amountOut) {
+    function swapExactIn(address inToken, uint256 amountIn) external returns (uint256 amountOut) {
         if (amountIn == 0) revert ZeroAmount();
 
         bool in0 = inToken == address(token0);
         if (!in0 && inToken != address(token1)) revert("bad token");
 
-        (MockERC20 inT, MockERC20 outT, uint256 rIn, uint256 rOut) = in0
-            ? (token0, token1, reserve0, reserve1)
-            : (token1, token0, reserve1, reserve0);
+        (MockERC20 inT, MockERC20 outT, uint256 rIn, uint256 rOut) =
+            in0 ? (token0, token1, reserve0, reserve1) : (token1, token0, reserve1, reserve0);
 
         // pull in
         inT.transferFrom(msg.sender, address(this), amountIn);

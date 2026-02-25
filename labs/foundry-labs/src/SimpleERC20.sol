@@ -28,16 +28,8 @@ contract SimpleERC20 {
         owner = msg.sender;
     }
 
-    event Transfer(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Transfer(address indexed owner, address indexed spender, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     address public owner;
 
@@ -78,11 +70,7 @@ contract SimpleERC20 {
         return true;
     }
 
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amount
-    ) external returns (bool) {
+    function transferFrom(address from, address to, uint256 amount) external returns (bool) {
         address spender = msg.sender;
 
         _spendAllowance(from, spender, amount);
@@ -91,17 +79,14 @@ contract SimpleERC20 {
         return true;
     }
 
-    function _spendAllowance(
-        address owner,
-        address spender,
-        uint256 amount
-    ) internal {
+    function _spendAllowance(address owner, address spender, uint256 amount) internal {
         uint256 current = allowance[owner][spender];
 
         // “无限授权”优化：max 表示不扣减
         if (current != type(uint256).max) {
-            if (current < amount)
+            if (current < amount) {
                 revert InsufficientAllowance(spender, current, amount);
+            }
 
             unchecked {
                 uint256 newAllowance = current - amount;

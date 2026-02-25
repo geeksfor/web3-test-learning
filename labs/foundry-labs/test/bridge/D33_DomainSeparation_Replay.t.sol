@@ -29,10 +29,7 @@ contract D33_DomainSeparation_Replay_Test is Test {
         receiver = new BridgeReceiver(DST_CHAIN, IMintable(address(token)));
     }
 
-    function _payload(
-        address to,
-        uint256 amount
-    ) internal pure returns (bytes memory) {
+    function _payload(address to, uint256 amount) internal pure returns (bytes memory) {
         return abi.encode(to, amount);
     }
 
@@ -44,56 +41,24 @@ contract D33_DomainSeparation_Replay_Test is Test {
         uint64 nonce = 1;
         bytes memory payload = _payload(alice, 100);
 
-        bytes32 idA = MessageIdLib.compute(
-            srcChainId,
-            srcAppA,
-            DST_CHAIN,
-            address(receiver),
-            nonce,
-            payload
-        );
+        bytes32 idA = MessageIdLib.compute(srcChainId, srcAppA, DST_CHAIN, address(receiver), nonce, payload);
 
         // 改 srcApp → 必须变化
-        bytes32 idSrcAppChanged = MessageIdLib.compute(
-            srcChainId,
-            srcAppB,
-            DST_CHAIN,
-            address(receiver),
-            nonce,
-            payload
-        );
+        bytes32 idSrcAppChanged =
+            MessageIdLib.compute(srcChainId, srcAppB, DST_CHAIN, address(receiver), nonce, payload);
         assertTrue(idA != idSrcAppChanged);
 
         // 改 dstApp → 必须变化
-        bytes32 idDstAppChanged = MessageIdLib.compute(
-            srcChainId,
-            srcAppA,
-            DST_CHAIN,
-            address(0xBEEF),
-            nonce,
-            payload
-        );
+        bytes32 idDstAppChanged = MessageIdLib.compute(srcChainId, srcAppA, DST_CHAIN, address(0xBEEF), nonce, payload);
         assertTrue(idA != idDstAppChanged);
 
         // 改 chainId（src 或 dst 任意一侧）→ 必须变化
-        bytes32 idSrcChainChanged = MessageIdLib.compute(
-            uint16(999),
-            srcAppA,
-            DST_CHAIN,
-            address(receiver),
-            nonce,
-            payload
-        );
+        bytes32 idSrcChainChanged =
+            MessageIdLib.compute(uint16(999), srcAppA, DST_CHAIN, address(receiver), nonce, payload);
         assertTrue(idA != idSrcChainChanged);
 
-        bytes32 idDstChainChanged = MessageIdLib.compute(
-            srcChainId,
-            srcAppA,
-            uint16(202),
-            address(receiver),
-            nonce,
-            payload
-        );
+        bytes32 idDstChainChanged =
+            MessageIdLib.compute(srcChainId, srcAppA, uint16(202), address(receiver), nonce, payload);
         assertTrue(idA != idDstChainChanged);
     }
 
@@ -108,17 +73,8 @@ contract D33_DomainSeparation_Replay_Test is Test {
         assertEq(token.balanceOf(alice), 123);
 
         // 第二次同样消息 = 重放
-        bytes32 mid = MessageIdLib.compute(
-            srcChainId,
-            srcApp,
-            DST_CHAIN,
-            address(receiver),
-            nonce,
-            payload
-        );
-        vm.expectRevert(
-            abi.encodeWithSelector(BridgeReceiver.Replay.selector, mid)
-        );
+        bytes32 mid = MessageIdLib.compute(srcChainId, srcApp, DST_CHAIN, address(receiver), nonce, payload);
+        vm.expectRevert(abi.encodeWithSelector(BridgeReceiver.Replay.selector, mid));
         receiver.lzReceive(srcChainId, srcApp, nonce, payload);
 
         // 状态不应变化

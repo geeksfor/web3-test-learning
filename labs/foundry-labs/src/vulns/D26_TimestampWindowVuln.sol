@@ -20,14 +20,9 @@ contract D26_TimestampWindowVuln {
 
     /// @notice 规则：活动期间可买；如果在最后 10 秒内买，享受超低折扣
     function buy() external payable {
-        require(
-            block.timestamp >= saleStart && block.timestamp <= saleEnd,
-            "not in sale"
-        );
+        require(block.timestamp >= saleStart && block.timestamp <= saleEnd, "not in sale");
         // ⚠️ 漏洞点：窗口非常窄（最后10秒），且价格差距巨大
-        uint256 price = (block.timestamp >= saleEnd - 10)
-            ? DISCOUNT_PRICE
-            : FULL_PRICE;
+        uint256 price = (block.timestamp >= saleEnd - 10) ? DISCOUNT_PRICE : FULL_PRICE;
         require(msg.value == price, "wrong price");
         emit Bought(msg.sender, msg.value, block.timestamp);
     }

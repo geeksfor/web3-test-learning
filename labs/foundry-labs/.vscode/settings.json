@@ -1,11 +1,19 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "JuanBlanco.solidity",
+
+  // ✅ 全局默认 formatter 不要设成 JuanBlanco（避免抢占其它语言）
+  // "editor.defaultFormatter": "JuanBlanco.solidity",
+
+  // ✅ Solidity 专用：改用 Foundry 的 formatter
   "[solidity]": {
-    "editor.defaultFormatter": "JuanBlanco.solidity"
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "foundry.vscode-foundry"
   },
 
-  // 让 Solidity 插件更容易找到依赖（通常 lib 就够用）
+  // ✅ 禁用 JuanBlanco 的格式化（只保留它的语言服务/依赖解析）
+  "solidity.formatter": "none",
+
+  // 依赖目录：你原来的保留
   "solidity.packageDefaultDependenciesDirectory": "lib",
   "solidity.packageDefaultDependenciesContractsDirectory": ""
 }

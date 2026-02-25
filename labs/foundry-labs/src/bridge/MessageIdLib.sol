@@ -10,17 +10,6 @@ library MessageIdLib {
         uint64 nonce,
         bytes memory payload
     ) internal pure returns (bytes32) {
-        return
-            keccak256(
-                abi.encode(
-                    "MSG_V1",
-                    srcChainId,
-                    srcApp,
-                    dstChainId,
-                    dstApp,
-                    nonce,
-                    keccak256(payload)
-                )
-            );
+        return keccak256(abi.encode("MSG_V1", srcChainId, srcApp, dstChainId, dstApp, nonce, keccak256(payload)));
     }
 }

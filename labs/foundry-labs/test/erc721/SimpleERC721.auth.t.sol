@@ -7,12 +7,10 @@ import "../../src/erc721/SimpleERC721.sol";
 contract GoodReceiver is IERC721Receiver {
     event Received(address operator, address from, uint256 tokenId, bytes data);
 
-    function onERC721Received(
-        address operator,
-        address from,
-        uint256 tokenId,
-        bytes calldata data
-    ) external returns (bytes4) {
+    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)
+        external
+        returns (bytes4)
+    {
         emit Received(operator, from, tokenId, data);
         return IERC721Receiver.onERC721Received.selector;
     }
@@ -20,7 +18,8 @@ contract GoodReceiver is IERC721Receiver {
 
 contract BadReceiver {
     // 不实现 onERC721Received
-}
+
+    }
 
 contract SimpleERC721AuthTest is Test {
     SimpleERC721 nft;
