@@ -1,0 +1,68 @@
+name: Foundry Labs CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  fmt:
+    name: forge fmt --check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: labs/foundry-labs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      # 缓存：加速依赖与编译产物（foundry-labs 下的 out/cache/lib）
+      - name: Cache foundry artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            labs/foundry-labs/out
+            labs/foundry-labs/cache
+            labs/foundry-labs/lib
+          key: ${{ runner.os }}-foundry-${{ hashFiles('labs/foundry-labs/foundry.lock', 'labs/foundry-labs/foundry.toml', 'labs/foundry-labs/remappings.txt') }}
+
+      - name: Format check
+        run: forge fmt --check
+
+  test:
+    name: forge test
+    runs-on: ubuntu-latest
+    needs: fmt
+    defaults:
+      run:
+        working-directory: labs/foundry-labs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Cache foundry artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            labs/foundry-labs/out
+            labs/foundry-labs/cache
+            labs/foundry-labs/lib
+          key: ${{ runner.os }}-foundry-${{ hashFiles('labs/foundry-labs/foundry.lock', 'labs/foundry-labs/foundry.toml', 'labs/foundry-labs/remappings.txt') }}
+
+      # 如果你有 fork 测试，需要 ETH_RPC_URL：见下方“fork/RPC”段落
+      - name: Run tests
+        run: forge test -vvv

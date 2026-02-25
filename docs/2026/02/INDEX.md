@@ -447,3 +447,8 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
 - totalAssets 是否受 donation 影响？
 - deposit/mint 与 withdraw/redeem 是否都有最小输出保护？
 - rounding 策略是否一致、是否可被套利或 DoS？
+
+## D57：GitHub Actions CI（Foundry）
+- 文件：`docs/2026/02/D57_GitHub_Actions_Foundry_CI.md`
+- 关键点：`.github/workflows` 放在仓库根目录；对子目录 `labs/foundry-labs` 用 `working-directory`；fmt + test 分层；submodule 与 cache；可选 fork RPC secrets
+- 命令：`forge fmt --check`、`forge test -vvv`
