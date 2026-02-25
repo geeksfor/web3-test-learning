@@ -45,11 +45,7 @@ contract D24_SlippageProtection_Fixed_Test is Test {
         uint256 amountInAlice = 10 ether;
 
         // 正常预期
-        uint256 expectedNormal = amm.getAmountOut(
-            amountInAlice,
-            amm.reserve0(),
-            amm.reserve1()
-        );
+        uint256 expectedNormal = amm.getAmountOut(amountInAlice, amm.reserve0(), amm.reserve1());
         uint256 minOut = (expectedNormal * 99) / 100; // 允许 1% 滑点
         uint256 deadline = block.timestamp;
 
@@ -65,11 +61,7 @@ contract D24_SlippageProtection_Fixed_Test is Test {
 
     function test_fix_deadlineExpired_reverts() public {
         uint256 amountInAlice = 1 ether;
-        uint256 expectedNormal = amm.getAmountOut(
-            amountInAlice,
-            amm.reserve0(),
-            amm.reserve1()
-        );
+        uint256 expectedNormal = amm.getAmountOut(amountInAlice, amm.reserve0(), amm.reserve1());
 
         vm.warp(100);
         vm.prank(alice);

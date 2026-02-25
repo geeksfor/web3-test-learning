@@ -39,10 +39,7 @@ contract SimpleAMMXYKFee {
     }
 
     /// @notice 对输入收手续费的 swapExactIn：给定 tokenIn 和 amountIn，换出另一边 tokenOut
-    function swapExactIn(
-        address tokenIn,
-        uint256 amountIn
-    ) external returns (uint256 amountOut) {
+    function swapExactIn(address tokenIn, uint256 amountIn) external returns (uint256 amountOut) {
         if (amountIn == 0) revert BadAmount();
 
         (uint256 r0, uint256 r1) = getReserves();

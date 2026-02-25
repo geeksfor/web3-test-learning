@@ -11,19 +11,10 @@ contract SimpleERC20ApproveRace {
     mapping(address => mapping(address => uint256)) public allowance;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     error InsufficientBalance(address from, uint256 have, uint256 need);
-    error InsufficientAllowance(
-        address owner,
-        address spender,
-        uint256 have,
-        uint256 need
-    );
+    error InsufficientAllowance(address owner, address spender, uint256 have, uint256 need);
 
     // 铸币
     function mint(address to, uint256 amount) external {
@@ -48,11 +39,7 @@ contract SimpleERC20ApproveRace {
         return true;
     }
 
-    function transferFrom(
-        address from,
-        address to,
-        uint256 value
-    ) external returns (bool) {
+    function transferFrom(address from, address to, uint256 value) external returns (bool) {
         uint256 bal = balanceOf[from];
         if (bal < value) revert InsufficientBalance(from, bal, value);
 
@@ -67,10 +54,7 @@ contract SimpleERC20ApproveRace {
     }
 
     // 安全改法 B：差量增加（更推荐）
-    function increaseAllowance(
-        address spender,
-        uint256 addedValue
-    ) external returns (bool) {
+    function increaseAllowance(address spender, uint256 addedValue) external returns (bool) {
         uint256 cur = allowance[msg.sender][spender];
         uint256 next = cur + addedValue;
         allowance[msg.sender][spender] = next;
@@ -78,10 +62,7 @@ contract SimpleERC20ApproveRace {
         return true;
     }
 
-    function decreaseAllowance(
-        address spender,
-        uint256 subtractedValue
-    ) external returns (bool) {
+    function decreaseAllowance(address spender, uint256 subtractedValue) external returns (bool) {
         uint256 cur = allowance[msg.sender][spender];
         require(cur >= subtractedValue, "decrease below zero");
         uint256 next = cur - subtractedValue;

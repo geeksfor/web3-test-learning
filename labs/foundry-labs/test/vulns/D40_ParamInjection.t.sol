@@ -33,13 +33,8 @@ contract D40_ParamInjection_Test is Test {
         uint256 deadline = block.timestamp + 1 days;
         uint256 nonce = vuln.nonces(alice);
 
-        bytes32 digest = keccak256(
-            abi.encodePacked("D40_TRANSFER_V1", alice, nonce, deadline)
-        );
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
-            alicePk,
-            toEthSignedMessageHash(digest)
-        );
+        bytes32 digest = keccak256(abi.encodePacked("D40_TRANSFER_V1", alice, nonce, deadline));
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(alicePk, toEthSignedMessageHash(digest));
 
         // 攻击者注入参数：把 to 改成 attacker，把 amount 改大
         vuln.transferWithSig(alice, attacker, 900, deadline, v, r, s);
@@ -58,43 +53,24 @@ contract D40_ParamInjection_Test is Test {
 
         bytes32 digest = keccak256(
             abi.encode(
-                "D40_TRANSFER_V1",
-                block.chainid,
-                address(fixedC),
-                alice,
-                intendedTo,
-                intendedAmount,
-                nonce,
-                deadline
+                "D40_TRANSFER_V1", block.chainid, address(fixedC), alice, intendedTo, intendedAmount, nonce, deadline
             )
         );
 
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
-            alicePk,
-            toEthSignedMessageHash(digest)
-        );
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(alicePk, toEthSignedMessageHash(digest));
 
         // 攻击者尝试注入：改 to/amount
         vm.expectRevert(D40_ParamInjectionFixed.BadSig.selector);
         fixedC.transferWithSig(alice, attacker, 900, deadline, v, r, s);
 
         // 正常执行：必须和签名参数一致
-        fixedC.transferWithSig(
-            alice,
-            intendedTo,
-            intendedAmount,
-            deadline,
-            v,
-            r,
-            s
-        );
+        fixedC.transferWithSig(alice, intendedTo, intendedAmount, deadline, v, r, s);
 
         assertEq(fixedC.balanceOf(bob), 100);
         assertEq(fixedC.balanceOf(alice), 900);
     }
 
     function toEthSignedMessageHash(bytes32 h) internal pure returns (bytes32) {
-        return
-            keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", h));
+        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", h));
     }
 }

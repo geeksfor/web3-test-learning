@@ -69,7 +69,7 @@ contract D51_UniswapV2_Readonly_Test is Test {
         IUniswapV2Pair pair = IUniswapV2Pair(PAIR);
         address token0 = pair.token0();
         address token1 = pair.token1();
-        (uint112 r0, uint112 r1, ) = pair.getReserves();
+        (uint112 r0, uint112 r1,) = pair.getReserves();
 
         // 仅演示：把关键字段打印出来，方便你本地观察
         emit log_named_address("PAIR", PAIR);

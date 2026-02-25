@@ -19,13 +19,7 @@ contract AttackSpotOracle is IFlashBorrower {
 
     error NotOwner();
 
-    constructor(
-        MockERC20 _usd,
-        MockERC20 _eth,
-        FlashLenderMock _lender,
-        SimpleAMM _amm,
-        SpotOracleLending _lending
-    ) {
+    constructor(MockERC20 _usd, MockERC20 _eth, FlashLenderMock _lender, SimpleAMM _amm, SpotOracleLending _lending) {
         usd = _usd;
         eth = _eth;
         lender = _lender;
@@ -44,12 +38,17 @@ contract AttackSpotOracle is IFlashBorrower {
     }
 
     function onFlashLoan(
-        address /*initiator*/,
-        address /*assetAddr*/,
+        address,
+        /*initiator*/
+        address,
+        /*assetAddr*/
         uint256 amount,
         uint256 fee,
         bytes calldata data
-    ) external override {
+    )
+        external
+        override
+    {
         require(msg.sender == address(lender), "only lender");
         uint256 borrowUsd = abi.decode(data, (uint256));
 

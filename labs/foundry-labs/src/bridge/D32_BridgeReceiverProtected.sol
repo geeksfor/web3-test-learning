@@ -16,12 +16,7 @@ contract BridgeReceiverProtected {
     // replay protection
     mapping(bytes32 => bool) public processed;
 
-    event MessageProcessed(
-        bytes32 indexed messageId,
-        uint32 srcChainId,
-        address indexed srcApp,
-        uint64 nonce
-    );
+    event MessageProcessed(bytes32 indexed messageId, uint32 srcChainId, address indexed srcApp, uint64 nonce);
     event Minted(address indexed to, uint256 amount, bytes32 indexed messageId);
 
     constructor(address _endpoint, IMintable _token) {
@@ -30,17 +25,10 @@ contract BridgeReceiverProtected {
     }
 
     /// @notice endpoint 回调入口（名字你可以按 mock 端点约定改）
-    function lzReceive(
-        uint32 srcChainId,
-        address srcApp,
-        uint64 nonce,
-        bytes calldata payload
-    ) external {
+    function lzReceive(uint32 srcChainId, address srcApp, uint64 nonce, bytes calldata payload) external {
         if (msg.sender != endpoint) revert NotEndpoint(msg.sender);
 
-        bytes32 messageId = keccak256(
-            abi.encode(srcChainId, srcApp, nonce, payload)
-        );
+        bytes32 messageId = keccak256(abi.encode(srcChainId, srcApp, nonce, payload));
         if (processed[messageId]) revert Replay(messageId);
 
         // ✅ 建议先标记，再做业务（更 CEI）

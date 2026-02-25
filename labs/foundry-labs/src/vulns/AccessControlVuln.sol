@@ -14,10 +14,7 @@ contract AccessControlVuln {
     uint256 public feesAccrued; // 累计手续费（留在合约里，等待提取）
 
     // ---- events ----
-    event TreasuryChanged(
-        address indexed oldTreasury,
-        address indexed newTreasury
-    );
+    event TreasuryChanged(address indexed oldTreasury, address indexed newTreasury);
     event FeeChanged(uint256 oldFeeBps, uint256 newFeeBps);
     event Paused(address indexed by);
     event Unpaused(address indexed by);
@@ -73,7 +70,7 @@ contract AccessControlVuln {
     function withdrawFees() external {
         uint256 amount = feesAccrued;
         feesAccrued = 0;
-        (bool ok, ) = treasury.call{value: amount}("");
+        (bool ok,) = treasury.call{value: amount}("");
         if (!ok) revert TransferFailed();
         emit FeesWithdrawn(treasury, amount);
     }

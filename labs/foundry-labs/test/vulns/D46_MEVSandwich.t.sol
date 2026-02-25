@@ -82,16 +82,9 @@ contract D46_MEVSandwich_Test is Test {
         uint256 outSandwichReal = tokenB.balanceOf(victim) - victimB_before2;
         vm.stopPrank();
 
-        assertEq(
-            outSandwichReal,
-            outSandwichQuote,
-            "sandwich out should match quote"
-        );
+        assertEq(outSandwichReal, outSandwichQuote, "sandwich out should match quote");
 
-        assertTrue(
-            outSandwichReal < outBase,
-            "victim fill should be worse under sandwich"
-        );
+        assertTrue(outSandwichReal < outBase, "victim fill should be worse under sandwich");
 
         // 3) attacker back-run：把 B->A 换回去，吃回价格并获利
         // 3) attacker back-run：把 B->A 换回去，吃回价格并获利
@@ -100,10 +93,7 @@ contract D46_MEVSandwich_Test is Test {
         uint256 attackerA_after = tokenA.balanceOf(attacker);
         vm.stopPrank();
 
-        assertTrue(
-            attackerA_after > attackerA_before,
-            "attacker should profit in simplified sandwich"
-        );
+        assertTrue(attackerA_after > attackerA_before, "attacker should profit in simplified sandwich");
     }
 
     /// @notice 修复：victim 带 minOut + deadline，夹子下应因滑点而 revert

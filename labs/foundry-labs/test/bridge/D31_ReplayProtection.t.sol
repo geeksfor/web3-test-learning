@@ -35,19 +35,9 @@ contract D31_ReplayProtection_Test is Test {
         uint256 balBefore = token.balanceOf(user);
         uint256 supplyBefore = token.totalSupply();
 
-        bytes32 messageId = receiver.computeMessageId(
-            srcChainId,
-            srcApp,
-            nonce,
-            payload
-        );
+        bytes32 messageId = receiver.computeMessageId(srcChainId, srcApp, nonce, payload);
 
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                BridgeReceiver.AlreadyProcessed.selector,
-                messageId
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(BridgeReceiver.AlreadyProcessed.selector, messageId));
         vm.prank(endpoint);
         receiver.receiveMessage(srcChainId, srcApp, nonce, payload);
 

@@ -91,16 +91,11 @@ contract D22_OracleManipulation_Test is Test {
         assertGt(lending.debtOf(attacker2), fairMaxBorrow);
 
         // 额外对照：操纵后比操纵前多借了 450
-        assertEq(
-            lending.debtOf(attacker2) - lending.debtOf(attacker1),
-            450 * WAD
-        );
+        assertEq(lending.debtOf(attacker2) - lending.debtOf(attacker1), 450 * WAD);
     }
 
     // 这个用例展示“同一个人先存抵押，再拉价，再借更多”
-    function test_oracleManipulation_canExceedMaxIfPriceInflated_midway()
-        public
-    {
+    function test_oracleManipulation_canExceedMaxIfPriceInflated_midway() public {
         uint256 depositAmt = 1 * WAD;
 
         _deposit(attacker1, depositAmt);

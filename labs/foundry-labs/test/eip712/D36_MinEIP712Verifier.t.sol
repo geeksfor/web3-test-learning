@@ -21,12 +21,8 @@ contract D36_MinEIP712Verifier_Test is Test {
     }
 
     function test_verify_ok() public {
-        D36_MinEIP712Verifier.Mail memory m = D36_MinEIP712Verifier.Mail({
-            to: bob,
-            amount: 123,
-            nonce: 1,
-            deadline: block.timestamp + 1 hours
-        });
+        D36_MinEIP712Verifier.Mail memory m =
+            D36_MinEIP712Verifier.Mail({to: bob, amount: 123, nonce: 1, deadline: block.timestamp + 1 hours});
 
         bytes32 digest = verifier.digestMail(m);
 
@@ -37,12 +33,8 @@ contract D36_MinEIP712Verifier_Test is Test {
     }
 
     function test_verify_fails_if_deadline_expired() public {
-        D36_MinEIP712Verifier.Mail memory m = D36_MinEIP712Verifier.Mail({
-            to: bob,
-            amount: 123,
-            nonce: 1,
-            deadline: block.timestamp + 1
-        });
+        D36_MinEIP712Verifier.Mail memory m =
+            D36_MinEIP712Verifier.Mail({to: bob, amount: 123, nonce: 1, deadline: block.timestamp + 1});
 
         bytes32 digest = verifier.digestMail(m);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(signerPk, digest);
@@ -53,35 +45,23 @@ contract D36_MinEIP712Verifier_Test is Test {
     }
 
     function test_verify_fails_if_nonce_changed() public {
-        D36_MinEIP712Verifier.Mail memory m = D36_MinEIP712Verifier.Mail({
-            to: bob,
-            amount: 123,
-            nonce: 1,
-            deadline: block.timestamp + 1 hours
-        });
+        D36_MinEIP712Verifier.Mail memory m =
+            D36_MinEIP712Verifier.Mail({to: bob, amount: 123, nonce: 1, deadline: block.timestamp + 1 hours});
 
         bytes32 digest = verifier.digestMail(m);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(signerPk, digest);
 
         // 验签时把 nonce 改掉 => structHash 变了 => digest 变了 => recover 失败
-        D36_MinEIP712Verifier.Mail memory m2 = D36_MinEIP712Verifier.Mail({
-            to: bob,
-            amount: 123,
-            nonce: 2,
-            deadline: m.deadline
-        });
+        D36_MinEIP712Verifier.Mail memory m2 =
+            D36_MinEIP712Verifier.Mail({to: bob, amount: 123, nonce: 2, deadline: m.deadline});
 
         bool ok = verifier.verify(signer, m2, v, r, s);
         assertFalse(ok);
     }
 
     function test_verify_fails_if_expectedSigner_wrong() public {
-        D36_MinEIP712Verifier.Mail memory m = D36_MinEIP712Verifier.Mail({
-            to: bob,
-            amount: 123,
-            nonce: 1,
-            deadline: block.timestamp + 1 hours
-        });
+        D36_MinEIP712Verifier.Mail memory m =
+            D36_MinEIP712Verifier.Mail({to: bob, amount: 123, nonce: 1, deadline: block.timestamp + 1 hours});
 
         bytes32 digest = verifier.digestMail(m);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(signerPk, digest);

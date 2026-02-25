@@ -23,21 +23,12 @@ contract D37_NonceReplayFixed {
         signer = _signer;
     }
 
-    function _hash(
-        address to,
-        uint256 amount,
-        uint256 nonce
-    ) internal pure returns (bytes32) {
+    function _hash(address to, uint256 amount, uint256 nonce) internal pure returns (bytes32) {
         // ✅ 修复：加入 nonce（也可加入 chainid / address(this) 做域隔离）
         return keccak256(abi.encodePacked(to, amount, nonce));
     }
 
-    function claim(
-        address to,
-        uint256 amount,
-        uint256 nonce,
-        bytes calldata sig
-    ) external {
+    function claim(address to, uint256 amount, uint256 nonce, bytes calldata sig) external {
         if (usedNonce[to][nonce]) revert NonceUsed(to, nonce);
 
         bytes32 digest = _hash(to, amount, nonce).toEthSignedMessageHash();

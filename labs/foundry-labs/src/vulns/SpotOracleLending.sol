@@ -25,12 +25,7 @@ contract SpotOracleLending {
     error ZeroAmount();
     error ExceedsBorrowLimit(uint256 want, uint256 limit);
 
-    constructor(
-        MockERC20 _usd,
-        MockERC20 _eth,
-        SimpleAMM _amm,
-        uint256 _ltvBps
-    ) {
+    constructor(MockERC20 _usd, MockERC20 _eth, SimpleAMM _amm, uint256 _ltvBps) {
         usd = _usd;
         eth = _eth;
         amm = _amm;

@@ -40,11 +40,7 @@ contract D50_Fork_Test is Test {
         emit log_named_uint("whale USDC balance", whaleBal);
 
         // 断言：这个地址在该区块确实有钱（否则就换地址或换区块）
-        assertGt(
-            whaleBal,
-            1_000_000e6,
-            "whale balance too small at this block"
-        );
+        assertGt(whaleBal, 1_000_000e6, "whale balance too small at this block");
 
         // fork 环境里，你可以“扮演”任何地址发交易（用于测试）
         vm.prank(USDC_WHALE);
@@ -52,10 +48,6 @@ contract D50_Fork_Test is Test {
         assertTrue(ok, "transfer failed");
 
         assertEq(usdc.balanceOf(alice), 100e6, "alice should receive 100 USDC");
-        assertEq(
-            usdc.balanceOf(USDC_WHALE),
-            whaleBal - 100e6,
-            "whale balance should decrease"
-        );
+        assertEq(usdc.balanceOf(USDC_WHALE), whaleBal - 100e6, "whale balance should decrease");
     }
 }

@@ -42,7 +42,7 @@ contract D17_BadInit_AttackTest is Test {
 
         // 2) 给合约打点 ETH（模拟合约里有资金）
         vm.deal(address(this), 10 ether);
-        (bool ok, ) = address(bad).call{value: 5 ether}("");
+        (bool ok,) = address(bad).call{value: 5 ether}("");
         require(ok, "fund failed");
         assertEq(address(bad).balance, 5 ether);
 

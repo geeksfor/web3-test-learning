@@ -35,27 +35,19 @@ contract BridgeReceiverProtectedTest is Test {
 
     function setUp() public {
         token = new SimpleMintableERC20();
-        receiver = new BridgeReceiverProtected(
-            endpoint,
-            IMintable(address(token))
-        );
+        receiver = new BridgeReceiverProtected(endpoint, IMintable(address(token)));
     }
 
-    function _payload(
-        address _to,
-        uint256 _amount
-    ) internal pure returns (bytes memory) {
+    function _payload(address _to, uint256 _amount) internal pure returns (bytes memory) {
         return abi.encode(_to, _amount);
     }
 
-    function _messageId(
-        uint32 _srcChainId,
-        address _srcApp,
-        uint64 _nonce,
-        bytes memory _payloadBytes
-    ) internal pure returns (bytes32) {
-        return
-            keccak256(abi.encode(_srcChainId, _srcApp, _nonce, _payloadBytes));
+    function _messageId(uint32 _srcChainId, address _srcApp, uint64 _nonce, bytes memory _payloadBytes)
+        internal
+        pure
+        returns (bytes32)
+    {
+        return keccak256(abi.encode(_srcChainId, _srcApp, _nonce, _payloadBytes));
     }
 
     function test_firstDelivery_mints_and_marksProcessed() public {
@@ -86,12 +78,7 @@ contract BridgeReceiverProtectedTest is Test {
 
         // 第二次：重放 -> revert，并且状态不变
         vm.prank(endpoint);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                BridgeReceiverProtected.Replay.selector,
-                messageId
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(BridgeReceiverProtected.Replay.selector, messageId));
         receiver.lzReceive(srcChainId, srcApp, nonce, payload);
 
         assertEq(token.balanceOf(to), balBefore);
@@ -116,12 +103,7 @@ contract BridgeReceiverProtectedTest is Test {
 
     function test_nonEndpointCaller_reverts() public {
         bytes memory payload = _payload(to, 100);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                BridgeReceiverProtected.NotEndpoint.selector,
-                address(this)
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(BridgeReceiverProtected.NotEndpoint.selector, address(this)));
         receiver.lzReceive(srcChainId, srcApp, nonce, payload);
     }
 }

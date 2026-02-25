@@ -10,11 +10,7 @@ contract SimpleERC20 {
     mapping(address => mapping(address => uint256)) public allowance;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     constructor(string memory n, string memory s) {
         name = n;
@@ -39,14 +35,11 @@ contract SimpleERC20 {
         return true;
     }
 
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amount
-    ) external returns (bool) {
+    function transferFrom(address from, address to, uint256 amount) external returns (bool) {
         uint256 allowed = allowance[from][msg.sender];
-        if (allowed != type(uint256).max)
+        if (allowed != type(uint256).max) {
             allowance[from][msg.sender] = allowed - amount;
+        }
 
         balanceOf[from] -= amount;
         balanceOf[to] += amount;

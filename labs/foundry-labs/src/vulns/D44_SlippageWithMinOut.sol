@@ -30,10 +30,7 @@ contract D44_SlippageWithMinOut {
         _update(uint256(reserve0) + amount0, uint256(reserve1) + amount1);
     }
 
-    function quoteOut(
-        address tokenIn,
-        uint256 amountIn
-    ) public view returns (uint256) {
+    function quoteOut(address tokenIn, uint256 amountIn) public view returns (uint256) {
         bool in0 = tokenIn == address(token0);
         require(in0 || tokenIn == address(token1), "bad token");
 
@@ -44,15 +41,13 @@ contract D44_SlippageWithMinOut {
         return (amountIn * r0) / (r1 + amountIn);
     }
 
-    function swapExactIn(
-        address tokenIn,
-        uint256 amountIn,
-        uint256 minOut,
-        uint256 deadline,
-        address to
-    ) external returns (uint256 amountOut) {
-        if (block.timestamp > deadline)
+    function swapExactIn(address tokenIn, uint256 amountIn, uint256 minOut, uint256 deadline, address to)
+        external
+        returns (uint256 amountOut)
+    {
+        if (block.timestamp > deadline) {
             revert Expired(block.timestamp, deadline);
+        }
 
         amountOut = quoteOut(tokenIn, amountIn);
         if (amountOut < minOut) revert Slippage(amountOut, minOut);
@@ -61,17 +56,11 @@ contract D44_SlippageWithMinOut {
         if (in0) {
             token0.transferFrom(msg.sender, address(this), amountIn);
             token1.transfer(to, amountOut);
-            _update(
-                uint256(reserve0) + amountIn,
-                uint256(reserve1) - amountOut
-            );
+            _update(uint256(reserve0) + amountIn, uint256(reserve1) - amountOut);
         } else {
             token1.transferFrom(msg.sender, address(this), amountIn);
             token0.transfer(to, amountOut);
-            _update(
-                uint256(reserve0) - amountOut,
-                uint256(reserve1) + amountIn
-            );
+            _update(uint256(reserve0) - amountOut, uint256(reserve1) + amountIn);
         }
     }
 }

@@ -12,10 +12,7 @@ contract D17_BadInit {
     address public treasury;
 
     event Initialized(address indexed owner, address indexed treasury);
-    event TreasuryChanged(
-        address indexed oldTreasury,
-        address indexed newTreasury
-    );
+    event TreasuryChanged(address indexed oldTreasury, address indexed newTreasury);
     event Swept(address indexed to, uint256 amount);
 
     modifier onlyOwner() {
@@ -39,7 +36,7 @@ contract D17_BadInit {
     /// @notice 演示危害：owner 可把合约里的 ETH 全部转走
     function sweepETH() external onlyOwner {
         uint256 bal = address(this).balance;
-        (bool ok, ) = treasury.call{value: bal}("");
+        (bool ok,) = treasury.call{value: bal}("");
         require(ok, "transfer failed");
         emit Swept(treasury, bal);
     }

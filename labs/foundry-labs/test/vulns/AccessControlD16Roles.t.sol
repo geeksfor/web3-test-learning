@@ -46,9 +46,7 @@ contract AccessControlD16RolesTest is Test {
         vm.startPrank(attacker);
         vm.expectRevert(
             abi.encodeWithSelector(
-                IAccessControl.AccessControlUnauthorizedAccount.selector,
-                attacker,
-                fixedR.CONFIG_ROLE()
+                IAccessControl.AccessControlUnauthorizedAccount.selector, attacker, fixedR.CONFIG_ROLE()
             )
         );
         fixedR.setTreasury(attacker);
@@ -66,9 +64,7 @@ contract AccessControlD16RolesTest is Test {
         vm.startPrank(attacker);
         vm.expectRevert(
             abi.encodeWithSelector(
-                IAccessControl.AccessControlUnauthorizedAccount.selector,
-                attacker,
-                fixedR.FINANCE_ROLE()
+                IAccessControl.AccessControlUnauthorizedAccount.selector, attacker, fixedR.FINANCE_ROLE()
             )
         );
         fixedR.withdrawFees();
@@ -81,9 +77,7 @@ contract AccessControlD16RolesTest is Test {
         vm.startPrank(attacker);
         vm.expectRevert(
             abi.encodeWithSelector(
-                IAccessControl.AccessControlUnauthorizedAccount.selector,
-                attacker,
-                fixedR.PAUSER_ROLE()
+                IAccessControl.AccessControlUnauthorizedAccount.selector, attacker, fixedR.PAUSER_ROLE()
             )
         );
         fixedR.pause();

@@ -30,14 +30,7 @@ contract SimpleERC20Test is Test {
         token.transfer(bob, 1 ether);
 
         // 这里 msg.sender 不再是 alice 了，是测试合约地址（余额为 0）
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                SimpleERC20.InsufficientBalance.selector,
-                address(this),
-                0,
-                1 ether
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC20.InsufficientBalance.selector, address(this), 0, 1 ether));
         token.transfer(bob, 1 ether);
     }
 
@@ -60,14 +53,7 @@ contract SimpleERC20Test is Test {
     function test_transfer_revert_insufficient_balance_exact() public {
         vm.prank(alice);
 
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                SimpleERC20.InsufficientBalance.selector,
-                alice,
-                100 ether,
-                101 ether
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC20.InsufficientBalance.selector, alice, 100 ether, 101 ether));
         token.transfer(bob, 101 ether);
     }
 }

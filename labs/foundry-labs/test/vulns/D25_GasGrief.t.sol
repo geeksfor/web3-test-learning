@@ -50,9 +50,7 @@ contract D25_GasGrief_Test is Test {
 
         while (!failed && n < 5_000) {
             // 增加一个参与者
-            address p = makeAddr(
-                string(abi.encodePacked("att", vm.toString(n)))
-            );
+            address p = makeAddr(string(abi.encodePacked("att", vm.toString(n))));
             vm.prank(p);
             vuln.register();
             n++;

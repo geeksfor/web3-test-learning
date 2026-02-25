@@ -23,12 +23,7 @@ contract D22_VulnerableLending {
     event Deposit(address indexed user, uint256 amount);
     event Borrow(address indexed user, uint256 amount);
 
-    constructor(
-        D22_SimpleERC20 col,
-        D22_SimpleERC20 debt,
-        D22_MockOracle oracle,
-        uint256 ltvWad
-    ) {
+    constructor(D22_SimpleERC20 col, D22_SimpleERC20 debt, D22_MockOracle oracle, uint256 ltvWad) {
         require(ltvWad <= 1e18, "BAD_LTV");
         COL = col;
         DEBT = debt;

@@ -46,9 +46,7 @@ contract D45_PriceManipulation_Test is Test {
         vm.stopPrank();
     }
 
-    function test_attack_manipulates_spot_price_and_increases_borrow_limit()
-        public
-    {
+    function test_attack_manipulates_spot_price_and_increases_borrow_limit() public {
         uint256 priceBefore = amm.spotPrice0In1();
 
         uint256 maxBorrowBefore = lend.maxBorrow(attacker);

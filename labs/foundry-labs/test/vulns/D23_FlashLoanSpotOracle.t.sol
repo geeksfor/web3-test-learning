@@ -74,17 +74,9 @@ contract D23_FlashLoanSpotOracle_Test is Test {
         uint256 attackerProfit = usd.balanceOf(address(attacker));
 
         // ---- Assertions ("操纵前后资产变化") ----
-        assertGt(
-            priceAfter,
-            priceBefore,
-            "spot price should be manipulated up"
-        );
+        assertGt(priceAfter, priceBefore, "spot price should be manipulated up");
         assertGt(attackerProfit, 0, "attacker should profit");
-        assertLt(
-            protocolUsdAfter,
-            protocolUsdBefore,
-            "protocol should lose USD liquidity"
-        );
+        assertLt(protocolUsdAfter, protocolUsdBefore, "protocol should lose USD liquidity");
 
         emit log_named_uint("priceBefore(USD/ETH,1e18)", priceBefore);
         emit log_named_uint("priceAfter(USD/ETH,1e18)", priceAfter);

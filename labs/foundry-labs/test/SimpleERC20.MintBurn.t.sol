@@ -24,9 +24,7 @@ contract SimpleERC20MintBurnTest is Test {
         // token.mintOnlyOwner(alice, INIT_MINT);
     }
 
-    function test_ownerMint_success_updatesSupplyAndBalance_andEmitsTransfer()
-        public
-    {
+    function test_ownerMint_success_updatesSupplyAndBalance_andEmitsTransfer() public {
         uint256 amount = 100 ether;
 
         uint256 supplyBefore = token.totalSupply();
@@ -51,9 +49,7 @@ contract SimpleERC20MintBurnTest is Test {
         assertEq(token.balanceOf(alice), balBefore + amount);
     }
 
-    function test_burn_success_updatesSupplyAndBalance_andEmitsTransfer()
-        public
-    {
+    function test_burn_success_updatesSupplyAndBalance_andEmitsTransfer() public {
         uint256 mintAmount = 100 ether;
         uint256 burnAmount = 40 ether;
 
@@ -106,17 +102,13 @@ contract SimpleERC20MintBurnTest is Test {
     // 非 owner mint
     function test_mint_revert_whenNotOwner() public {
         vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(SimpleERC20.Unauthorized.selector, alice)
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC20.Unauthorized.selector, alice));
         token.mintOnlyOwner(alice, 10 ether);
     }
 
     // mint 到 zero 地址
     function test_mint_revert_whenToZero() public {
-        vm.expectRevert(
-            abi.encodeWithSelector(SimpleERC20.InvalidAddress.selector)
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC20.InvalidAddress.selector));
         token.mintOnlyOwner(address(0), 10 ether);
     }
 
@@ -125,14 +117,7 @@ contract SimpleERC20MintBurnTest is Test {
         uint256 amount = 100 ether;
         uint256 bal = 0 ether;
         vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                SimpleERC20.InsufficientBalance.selector,
-                alice,
-                bal,
-                amount
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC20.InsufficientBalance.selector, alice, bal, amount));
         token.burn(amount);
     }
 
@@ -143,14 +128,7 @@ contract SimpleERC20MintBurnTest is Test {
         token.approve(spender, 10 ether);
 
         vm.prank(spender);
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                SimpleERC20.InsufficientAllowance.selector,
-                spender,
-                10 ether,
-                80 ether
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(SimpleERC20.InsufficientAllowance.selector, spender, 10 ether, 80 ether));
         token.burnFrom(alice, 80 ether);
     }
 }

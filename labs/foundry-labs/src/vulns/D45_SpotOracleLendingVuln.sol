@@ -38,8 +38,9 @@ contract D45_SpotOracleLendingVuln {
 
     function borrow(uint256 amount) external {
         uint256 maxB = maxBorrow(msg.sender);
-        if (debtOf[msg.sender] + amount > maxB)
+        if (debtOf[msg.sender] + amount > maxB) {
             revert ExceedsBorrowLimit(amount, maxB);
+        }
         debtOf[msg.sender] += amount;
         debt.transfer(msg.sender, amount);
     }

@@ -56,28 +56,14 @@ contract D43_SimpleAMMXYK_Test is Test {
         vm.stopPrank();
 
         assertEq(out, expectedOut, "amountOut should match x*y=k formula");
-        assertEq(
-            t1.balanceOf(bob) - bob1Before,
-            expectedOut,
-            "bob receives correct token1"
-        );
+        assertEq(t1.balanceOf(bob) - bob1Before, expectedOut, "bob receives correct token1");
 
         // 储备应与合约余额一致
-        assertEq(
-            uint256(amm.reserve0()),
-            t0.balanceOf(address(amm)),
-            "reserve0 == balance0"
-        );
-        assertEq(
-            uint256(amm.reserve1()),
-            t1.balanceOf(address(amm)),
-            "reserve1 == balance1"
-        );
+        assertEq(uint256(amm.reserve0()), t0.balanceOf(address(amm)), "reserve0 == balance0");
+        assertEq(uint256(amm.reserve1()), t1.balanceOf(address(amm)), "reserve1 == balance1");
     }
 
-    function test_swap0For1_slippageProtection_revertsWhenMinOutTooHigh()
-        public
-    {
+    function test_swap0For1_slippageProtection_revertsWhenMinOutTooHigh() public {
         t0.mint(bob, 10 ether);
 
         uint256 amountIn = 1 ether;
@@ -106,10 +92,7 @@ contract D43_SimpleAMMXYK_Test is Test {
         uint256 kAfter = uint256(amm.reserve0()) * uint256(amm.reserve1());
         // 允许极小误差：kAfter + 1 >= kBefore（常见“向下取整最多损 1”直觉）
         // 若你后面改公式/加 fee，可把断言改成 kAfter >= kBefore。
-        assertTrue(
-            kAfter <= kBefore,
-            "k should not increase without fee (floor division)"
-        );
+        assertTrue(kAfter <= kBefore, "k should not increase without fee (floor division)");
 
         // // 关键：kBefore - kAfter = kBefore % xNew < xNew
         // assertTrue(

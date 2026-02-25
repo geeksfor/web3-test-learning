@@ -39,11 +39,7 @@ contract SimpleERC20 {
         return true;
     }
 
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amt
-    ) external returns (bool) {
+    function transferFrom(address from, address to, uint256 amt) external returns (bool) {
         uint256 a = allowance[from][msg.sender];
         if (a != type(uint256).max) allowance[from][msg.sender] = a - amt;
         balanceOf[from] -= amt;
@@ -93,9 +89,7 @@ contract SimpleAMMXYK_D46 {
     }
 
     /// @notice 漏洞版：无 minOut / deadline，易被夹子
-    function swapExactInVuln_AtoB(
-        uint256 amountInA
-    ) external returns (uint256 outB) {
+    function swapExactInVuln_AtoB(uint256 amountInA) external returns (uint256 outB) {
         outB = quoteOutAtoB(amountInA);
 
         tokenA.transferFrom(msg.sender, address(this), amountInA);
@@ -106,13 +100,10 @@ contract SimpleAMMXYK_D46 {
     }
 
     /// @notice 修复版：加 minOut + deadline
-    function swapExactIn_AtoB(
-        uint256 amountInA,
-        uint256 minOutB,
-        uint256 deadline
-    ) external returns (uint256 outB) {
-        if (block.timestamp > deadline)
+    function swapExactIn_AtoB(uint256 amountInA, uint256 minOutB, uint256 deadline) external returns (uint256 outB) {
+        if (block.timestamp > deadline) {
             revert Expired(block.timestamp, deadline);
+        }
 
         outB = quoteOutAtoB(amountInA);
         if (outB < minOutB) revert Slippage(outB, minOutB);
@@ -126,9 +117,7 @@ contract SimpleAMMXYK_D46 {
 
     /// @notice 反向：B->A（给 attacker back-run 用）
     /// @notice 反向：B->A（给 attacker back-run 用）
-    function swapExactIn_BtoA(
-        uint256 amountInB
-    ) external returns (uint256 outA) {
+    function swapExactIn_BtoA(uint256 amountInB) external returns (uint256 outA) {
         outA = quoteOutBtoA(amountInB);
 
         tokenB.transferFrom(msg.sender, address(this), amountInB);

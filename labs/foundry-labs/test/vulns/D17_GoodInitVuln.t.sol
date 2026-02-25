@@ -58,7 +58,7 @@ contract D17_GoodInit_Test is Test {
 
         // 给合约打 5 ETH
         vm.deal(address(this), 10 ether);
-        (bool ok, ) = address(good).call{value: 5 ether}("");
+        (bool ok,) = address(good).call{value: 5 ether}("");
         require(ok, "fund failed");
         assertEq(address(good).balance, 5 ether);
 

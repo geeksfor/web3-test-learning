@@ -139,10 +139,7 @@ contract D19_RoundingVaultTest is Test {
         reward.mint(address(this), 1_000_000);
 
         // 部署 rewarder：shareToken 就是 vault（它继承 ERC20）
-        SimpleRewarder rewarder = new SimpleRewarder(
-            reward,
-            IERC20(address(vault))
-        );
+        SimpleRewarder rewarder = new SimpleRewarder(reward, IERC20(address(vault)));
         reward.transfer(address(rewarder), 1_000_000);
 
         // 1) Alice 初始化 100:100

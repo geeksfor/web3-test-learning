@@ -23,12 +23,7 @@ contract BridgeReceiver {
     }
 
     // 模拟跨链 Endpoint 调用入口
-    function lzReceive(
-        uint16 srcChainId,
-        address srcApp,
-        uint64 nonce,
-        bytes calldata payload
-    ) external {
+    function lzReceive(uint16 srcChainId, address srcApp, uint64 nonce, bytes calldata payload) external {
         bytes32 mid = MessageIdLib.compute(
             srcChainId,
             srcApp,

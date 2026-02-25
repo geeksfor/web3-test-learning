@@ -35,11 +35,7 @@ contract MockERC20 is Test {
         return true;
     }
 
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amt
-    ) external returns (bool) {
+    function transferFrom(address from, address to, uint256 amt) external returns (bool) {
         uint256 a = allowance[from][msg.sender];
         if (a != type(uint256).max) allowance[from][msg.sender] = a - amt;
         balanceOf[from] -= amt;

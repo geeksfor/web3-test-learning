@@ -26,13 +26,7 @@ import "./D23_MockERC20.sol";
 interface IFlashBorrower {
     /// @notice Called by lender after sending `amount` of `asset`
     /// @dev Borrower must return `amount + fee` to lender before returning.
-    function onFlashLoan(
-        address initiator,
-        address asset,
-        uint256 amount,
-        uint256 fee,
-        bytes calldata data
-    ) external;
+    function onFlashLoan(address initiator, address asset, uint256 amount, uint256 fee, bytes calldata data) external;
 }
 
 /// @title FlashLenderMock
@@ -55,11 +49,7 @@ contract FlashLenderMock {
         return asset.balanceOf(address(this));
     }
 
-    function flashLoan(
-        IFlashBorrower borrower,
-        uint256 amount,
-        bytes calldata data
-    ) external {
+    function flashLoan(IFlashBorrower borrower, uint256 amount, bytes calldata data) external {
         uint256 balBefore = asset.balanceOf(address(this));
         if (balBefore < amount) revert NotEnoughLiquidity(balBefore, amount);
 

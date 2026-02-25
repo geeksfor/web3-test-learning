@@ -13,19 +13,15 @@ jobs:
       run:
         working-directory: labs/foundry-labs
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
+      - uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
 
-      # 缓存：加速依赖与编译产物（foundry-labs 下的 out/cache/lib）
-      - name: Cache foundry artifacts
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: |
             labs/foundry-labs/out
@@ -33,8 +29,7 @@ jobs:
             labs/foundry-labs/lib
           key: ${{ runner.os }}-foundry-${{ hashFiles('labs/foundry-labs/foundry.lock', 'labs/foundry-labs/foundry.toml', 'labs/foundry-labs/remappings.txt') }}
 
-      - name: Format check
-        run: forge fmt --check
+      - run: forge fmt --check
 
   test:
     name: forge test
@@ -44,18 +39,15 @@ jobs:
       run:
         working-directory: labs/foundry-labs
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
+      - uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
 
-      - name: Cache foundry artifacts
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: |
             labs/foundry-labs/out
@@ -63,6 +55,56 @@ jobs:
             labs/foundry-labs/lib
           key: ${{ runner.os }}-foundry-${{ hashFiles('labs/foundry-labs/foundry.lock', 'labs/foundry-labs/foundry.toml', 'labs/foundry-labs/remappings.txt') }}
 
-      # 如果你有 fork 测试，需要 ETH_RPC_URL：见下方“fork/RPC”段落
-      - name: Run tests
-        run: forge test -vvv
+      - run: forge test -vvv
+
+  coverage:
+    name: forge coverage (html artifact)
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    # needs: test
+    # ✅ 只在 PR 跑 coverage（你要这一行就放这里）
+    if: ${{ github.event_name == 'pull_request' }}
+    defaults:
+      run:
+        working-directory: labs/foundry-labs
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            labs/foundry-labs/out
+            labs/foundry-labs/cache
+            labs/foundry-labs/lib
+          key: ${{ runner.os }}-foundry-${{ hashFiles('labs/foundry-labs/foundry.lock', 'labs/foundry-labs/foundry.toml', 'labs/foundry-labs/remappings.txt') }}
+
+      - name: Install lcov (genhtml)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
+
+      - name: Forge coverage (lcov)
+        run: |
+          forge coverage --report lcov || true
+          test -f lcov.info
+
+      - name: Generate HTML report
+        run: |
+          mkdir -p coverage-html
+          test -f lcov.info && genhtml lcov.info --output-directory coverage-html || true
+
+      - name: Upload coverage artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            labs/foundry-labs/coverage-html
+            labs/foundry-labs/lcov.info
+          retention-days: 14

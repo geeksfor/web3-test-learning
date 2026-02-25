@@ -41,12 +41,10 @@ contract SimpleAMMXYK {
     }
 
     // swapExactIn：用 x*y=k 推导 amountOut（无手续费版本）
-    function swapExactIn(
-        address tokenIn,
-        uint256 amountIn
-    ) external returns (uint256 amountOut) {
-        if (tokenIn != address(token0) && tokenIn != address(token1))
+    function swapExactIn(address tokenIn, uint256 amountIn) external returns (uint256 amountOut) {
+        if (tokenIn != address(token0) && tokenIn != address(token1)) {
             revert BadToken();
+        }
         if (reserve0 == 0 || reserve1 == 0) revert InsufficientLiquidity();
 
         bool inIs0 = tokenIn == address(token0);

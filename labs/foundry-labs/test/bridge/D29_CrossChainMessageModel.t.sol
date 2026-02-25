@@ -49,12 +49,7 @@ contract D29_CrossChainMessageModel_Test is Test {
         epB.deliverNext(0);
 
         // 第二次投递同一个 idx（同一个 messageId）必须 revert
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                BridgeReceiver.AlreadyProcessed.selector,
-                _msgId(0)
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(BridgeReceiver.AlreadyProcessed.selector, _msgId(0)));
         epB.deliverNext(0);
     }
 
@@ -64,13 +59,7 @@ contract D29_CrossChainMessageModel_Test is Test {
 
         senderA.bridge(CHAIN_B, address(receiverB), user, 100);
 
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                BridgeReceiver.UntrustedSource.selector,
-                CHAIN_A,
-                address(senderA)
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(BridgeReceiver.UntrustedSource.selector, CHAIN_A, address(senderA)));
         epB.deliverNext(0);
     }
 
@@ -79,9 +68,6 @@ contract D29_CrossChainMessageModel_Test is Test {
         // 如果你没写 getter，就先按同样规则重算：
         // 需要 srcApp=senderA, nonce=1, payload=abi.encode(user,100)
         bytes memory payload = abi.encode(user, uint256(100));
-        return
-            keccak256(
-                abi.encode(CHAIN_A, address(senderA), uint64(1), payload)
-            );
+        return keccak256(abi.encode(CHAIN_A, address(senderA), uint64(1), payload));
     }
 }

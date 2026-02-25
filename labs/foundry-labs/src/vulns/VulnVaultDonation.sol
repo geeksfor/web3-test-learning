@@ -17,18 +17,9 @@ contract VulnVaultDonation {
     uint256 public totalSupply;
     mapping(address => uint256) public balanceOf;
 
-    event Deposit(
-        address indexed caller,
-        address indexed owner,
-        uint256 assets,
-        uint256 shares
-    );
+    event Deposit(address indexed caller, address indexed owner, uint256 assets, uint256 shares);
     event Withdraw(
-        address indexed caller,
-        address indexed receiver,
-        address indexed owner,
-        uint256 assets,
-        uint256 shares
+        address indexed caller, address indexed receiver, address indexed owner, uint256 assets, uint256 shares
     );
 
     error ZeroAmount();
@@ -43,9 +34,7 @@ contract VulnVaultDonation {
         return asset.balanceOf(address(this));
     }
 
-    function previewDeposit(
-        uint256 assets
-    ) public view returns (uint256 shares) {
+    function previewDeposit(uint256 assets) public view returns (uint256 shares) {
         if (assets == 0) return 0;
         uint256 supply = totalSupply;
         uint256 assetsBefore = totalAssets();
@@ -55,19 +44,14 @@ contract VulnVaultDonation {
         if (shares == 0) shares = 1; // round up to keep demo simple
     }
 
-    function previewRedeem(
-        uint256 shares
-    ) public view returns (uint256 assetsOut) {
+    function previewRedeem(uint256 shares) public view returns (uint256 assetsOut) {
         if (shares == 0) return 0;
         uint256 supply = totalSupply;
         if (supply == 0) return 0;
         assetsOut = (shares * totalAssets()) / supply;
     }
 
-    function deposit(
-        uint256 assets,
-        address receiver
-    ) external returns (uint256 shares) {
+    function deposit(uint256 assets, address receiver) external returns (uint256 shares) {
         if (assets == 0) revert ZeroAmount();
 
         shares = previewDeposit(assets);
@@ -82,11 +66,7 @@ contract VulnVaultDonation {
         emit Deposit(msg.sender, receiver, assets, shares);
     }
 
-    function redeem(
-        uint256 shares,
-        address receiver,
-        address owner
-    ) external returns (uint256 assetsOut) {
+    function redeem(uint256 shares, address receiver, address owner) external returns (uint256 assetsOut) {
         if (shares == 0) revert ZeroAmount();
 
         uint256 bal = balanceOf[owner];

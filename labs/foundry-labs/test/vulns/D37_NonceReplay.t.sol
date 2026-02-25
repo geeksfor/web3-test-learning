@@ -19,27 +19,16 @@ contract D37_NonceReplay_Test is Test {
         alice = makeAddr("alice");
     }
 
-    function _signVuln(
-        address to,
-        uint256 amount
-    ) internal view returns (bytes memory sig) {
+    function _signVuln(address to, uint256 amount) internal view returns (bytes memory sig) {
         bytes32 msgHash = keccak256(abi.encodePacked(to, amount));
-        bytes32 digest = keccak256(
-            abi.encodePacked("\x19Ethereum Signed Message:\n32", msgHash)
-        );
+        bytes32 digest = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", msgHash));
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(signerPk, digest);
         sig = abi.encodePacked(r, s, v);
     }
 
-    function _signFixed(
-        address to,
-        uint256 amount,
-        uint256 nonce
-    ) internal view returns (bytes memory sig) {
+    function _signFixed(address to, uint256 amount, uint256 nonce) internal view returns (bytes memory sig) {
         bytes32 msgHash = keccak256(abi.encodePacked(to, amount, nonce));
-        bytes32 digest = keccak256(
-            abi.encodePacked("\x19Ethereum Signed Message:\n32", msgHash)
-        );
+        bytes32 digest = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", msgHash));
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(signerPk, digest);
         sig = abi.encodePacked(r, s, v);
     }
@@ -70,13 +59,7 @@ contract D37_NonceReplay_Test is Test {
         assertEq(fixedC.balanceOf(alice), 100);
 
         // 重放：nonce 已用 => revert
-        vm.expectRevert(
-            abi.encodeWithSelector(
-                D37_NonceReplayFixed.NonceUsed.selector,
-                alice,
-                nonce
-            )
-        );
+        vm.expectRevert(abi.encodeWithSelector(D37_NonceReplayFixed.NonceUsed.selector, alice, nonce));
         fixedC.claim(alice, amount, nonce, sig);
 
         // 状态不变

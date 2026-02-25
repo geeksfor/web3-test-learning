@@ -66,11 +66,7 @@ contract D23_FlashLoanDonation_Test is Test {
         // ---- Assertions ("操纵前后资产变化") ----
         assertGt(attackerProfit, 0, "attacker should profit");
         assertLt(vaultAfter, vaultBefore, "vault should lose assets");
-        assertLt(
-            aliceRedeemableAfter,
-            aliceRedeemableBefore,
-            "victim redeemable value should drop"
-        );
+        assertLt(aliceRedeemableAfter, aliceRedeemableBefore, "victim redeemable value should drop");
 
         emit log_named_uint("vaultBefore", vaultBefore);
         emit log_named_uint("vaultAfter", vaultAfter);

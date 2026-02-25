@@ -29,11 +29,7 @@ contract D44_SlippageNoMinOut {
     }
 
     // x*y=k 的最小 swap（无手续费），重点：没有 minOut
-    function swapExactIn(
-        address tokenIn,
-        uint256 amountIn,
-        address to
-    ) external returns (uint256 amountOut) {
+    function swapExactIn(address tokenIn, uint256 amountIn, address to) external returns (uint256 amountOut) {
         bool in0 = tokenIn == address(token0);
         require(in0 || tokenIn == address(token1), "bad token");
 
@@ -59,10 +55,7 @@ contract D44_SlippageNoMinOut {
         }
     }
 
-    function quoteOut(
-        address tokenIn,
-        uint256 amountIn
-    ) external view returns (uint256) {
+    function quoteOut(address tokenIn, uint256 amountIn) external view returns (uint256) {
         bool in0 = tokenIn == address(token0);
         require(in0 || tokenIn == address(token1), "bad token");
 

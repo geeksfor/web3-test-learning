@@ -13,9 +13,7 @@ contract FeeCollectorBad {
     }
 
     /// @notice 教学：返回扣费后的 amountOut；fee 向下取整
-    function takeFee(
-        uint256 amount
-    ) public returns (uint256 amountOut, uint256 fee) {
+    function takeFee(uint256 amount) public returns (uint256 amountOut, uint256 fee) {
         fee = (amount * feeBps) / 10_000; // floor
         feesAccrued += fee;
         amountOut = amount - fee;
