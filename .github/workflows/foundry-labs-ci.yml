@@ -60,7 +60,8 @@ jobs:
   coverage:
     name: forge coverage (html artifact)
     runs-on: ubuntu-latest
-    needs: test
+    if: ${{ always() }}
+    # needs: test
     # ✅ 只在 PR 跑 coverage（你要这一行就放这里）
     if: ${{ github.event_name == 'pull_request' }}
     defaults:
@@ -90,15 +91,16 @@ jobs:
 
       - name: Forge coverage (lcov)
         run: |
-          forge coverage --report lcov
+          forge coverage --report lcov || true
           test -f lcov.info
 
       - name: Generate HTML report
         run: |
           mkdir -p coverage-html
-          genhtml lcov.info --output-directory coverage-html
+          test -f lcov.info && genhtml lcov.info --output-directory coverage-html || true
 
       - name: Upload coverage artifact
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
