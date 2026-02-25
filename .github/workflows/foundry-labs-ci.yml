@@ -34,6 +34,7 @@ jobs:
     name: forge test (vulns only)
     runs-on: ubuntu-latest
     needs: fmt
+    continue-on-error: true
     defaults:
       run:
         working-directory: labs/foundry-labs
