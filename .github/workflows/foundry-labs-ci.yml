@@ -1,24 +1,27 @@
-  coverage:
-    name: forge coverage (html artifact)
-    if: ${{ github.event_name == 'pull_request' }}
+name: Foundry Labs CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  fmt:
+    name: forge fmt --check
     runs-on: ubuntu-latest
-    needs: test
     defaults:
       run:
         working-directory: labs/foundry-labs
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
+      - uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
 
-      - name: Cache foundry artifacts
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: |
             labs/foundry-labs/out
@@ -26,26 +29,75 @@
             labs/foundry-labs/lib
           key: ${{ runner.os }}-foundry-${{ hashFiles('labs/foundry-labs/foundry.lock', 'labs/foundry-labs/foundry.toml', 'labs/foundry-labs/remappings.txt') }}
 
-      # genhtml 来自 lcov 包
+      - run: forge fmt --check
+
+  test:
+    name: forge test
+    runs-on: ubuntu-latest
+    needs: fmt
+    defaults:
+      run:
+        working-directory: labs/foundry-labs
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            labs/foundry-labs/out
+            labs/foundry-labs/cache
+            labs/foundry-labs/lib
+          key: ${{ runner.os }}-foundry-${{ hashFiles('labs/foundry-labs/foundry.lock', 'labs/foundry-labs/foundry.toml', 'labs/foundry-labs/remappings.txt') }}
+
+      - run: forge test -vvv
+
+  coverage:
+    name: forge coverage (html artifact)
+    runs-on: ubuntu-latest
+    needs: test
+    # ✅ 只在 PR 跑 coverage（你要这一行就放这里）
+    if: ${{ github.event_name == 'pull_request' }}
+    defaults:
+      run:
+        working-directory: labs/foundry-labs
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            labs/foundry-labs/out
+            labs/foundry-labs/cache
+            labs/foundry-labs/lib
+          key: ${{ runner.os }}-foundry-${{ hashFiles('labs/foundry-labs/foundry.lock', 'labs/foundry-labs/foundry.toml', 'labs/foundry-labs/remappings.txt') }}
+
       - name: Install lcov (genhtml)
         run: |
           sudo apt-get update
           sudo apt-get install -y lcov
 
-      # 生成 lcov 覆盖率文件
       - name: Forge coverage (lcov)
         run: |
           forge coverage --report lcov
-          # Foundry 默认会在当前目录生成 lcov.info（如果你本地生成文件名不同，按实际改一下）
           test -f lcov.info
 
-      # 把 lcov 转成 html 报告
       - name: Generate HTML report
         run: |
           mkdir -p coverage-html
           genhtml lcov.info --output-directory coverage-html
 
-      # 上传 artifact：HTML 报告 + lcov 原始文件
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
